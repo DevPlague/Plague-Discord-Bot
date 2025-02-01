@@ -1,0 +1,18 @@
+[project]
+name = "raid-discord"
+version = "0.1.0"
+description = "Discord Bot that analyzes URLs and IPs sent in a text channel via VirusTotal API to alert users about potential threats."
+
+readme = "README.md"
+requires-python = "^3.11 || ^3.12"
+dependencies = [
+    "discord-py (>=2.4.0,<3.0.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
