@@ -1,6 +1,5 @@
-# This script is used to get IPv4 address report received by ipWD.py via VirusTotal API.
+# Finished
 import aiohttp
-import os
 from ipaddress import ip_address
 
 # ---- Funciones ----
@@ -12,10 +11,10 @@ async def valid_ip(ip: str) -> bool:
     except ValueError:
         return False
 
-async def ip_request(ip: str, api_key: str): 
+async def ip_report(ip: str, api_key: str): 
     """Request a report of an IP address from VirusTotal API."""
     if not await valid_ip(ip):
-        return f"IP address {ip} given isn't valid nor public."
+        return f"You just give me a bunch of numbers. This IP isn't valid."
     
     headers = {
         "x-apikey": str(api_key),

@@ -1,0 +1,9 @@
+# Poetry
+poetry.lock
+
+# Environment vars
+.env
+
+# Cache
+__pycache__
+*.pyc

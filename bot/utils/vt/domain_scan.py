@@ -1,5 +1,4 @@
-# This file will be used to scan for domains received by urlWD.py via VirusTotal API.
-
+# Finished
 from urllib.parse import urlparse
 import base64 as b64
 import aiohttp
@@ -29,7 +28,7 @@ async def valid_url(url: str) -> bool:
 async def url_report(url: str, api_key: str):
     """Request a report of a URL from VirusTotal API."""
     if not await valid_url(url):
-        return f"URL {url} isn't valid or accessible."
+        return f"Did you just unlock a new level of imagination? That URL doesn't exist."
 
     headers = {
         "x-apikey": str(api_key),

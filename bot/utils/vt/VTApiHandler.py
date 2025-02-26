@@ -1,19 +1,21 @@
+# Finished
+
 import asyncio
 import logging
-from bot.utils.domain_scan import url_report
-from ip_scan import ip_request
+from bot.utils.vt.domain_scan import url_report
+from bot.utils.vt.ip_scan import ip_report
 
-class ApiHandler:
+class VTApiHandler:
     def __init__(self, logger: logging.Logger, API_KEY: str) -> None:
         self.logger = logger # Register messages returned by application
         self.API_KEY = API_KEY
 
         if API_KEY is None:
-            raise ValueError("API_KEY is not set.")
+            raise ValueError("API_KEY is not set. Cannot request to VirusTotal API.")
 
     async def ip_scan(self, ip: str):
-        """Send the request asynchronously and returns the result."""
-        result = await ip_request(ip, self.API_KEY)
+        """Send the request to IP endpoint and returns the result."""
+        result = await ip_report(ip, self.API_KEY)
         self.logger.info(f"IP scan result for {ip}: {result}")
         return result
 
@@ -31,15 +33,3 @@ class ApiHandler:
         """Send the request synchronously and returns the result."""
         return asyncio.run(self.url_scan(url))
     
-# Usage example:
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO) # Set the logging level to INFO
-    logger = logging.getLogger(__name__)
-
-    API_KEY = "apikey"
-    api_handler = ApiHandler(logger, API_KEY)
-    
-    ip = "8.8.8.8"
-    
-    # Asynchronous request
-    asyncio.run(api_handler.ip_scan(ip))
