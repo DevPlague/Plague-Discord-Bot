@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Discord-Bot")
 
 if DISCORD_TOKEN is None:
-    logger.error("No Discord token found. Please create a .env file with the DISCORD_TOKEN variable.")
+    logger.error(" No Discord token found. Please create a .env file with the DISCORD_TOKEN variable.")
 
 
 # Permissions for the bot
@@ -33,15 +33,15 @@ bot = commands.Bot(command_prefix="!",
 @bot.event
 async def on_connect():
     """Event when the bot connects to Discord."""
-    logger.warning(f"{bot.user} has connected to Discord!\n")
+    logger.warning(f" {bot.user} has connected to Discord!\n")
     for guild in bot.guilds:
-        logger.warning(f"Connected to {guild.name}")
+        logger.warning(f" Connected to {guild.name}")
 
 @bot.event
 async def on_ready():
     """Event when the bot is ready to interact with Discord."""
-    logger.warning(f"{bot.user} has come to repel some bugs 🐛!\n")
-    logger.info(f"Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
+    logger.warning(f" {bot.user} has come to repel some bugs 🐛!\n")
+    logger.info(f" Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
     await bot.change_presence(activity=discord.Game(name="🐛🔥 Repelling bugs!"))
 
 # Commands
@@ -54,7 +54,7 @@ async def purge(ctx, amount=5):
     if not ctx.channel.permissions_for(ctx.guild.me).manage_messages:
         return
 
-    logger.info(f"Purging {amount} messages in {ctx.channel.name} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+    logger.info(f" Purging {amount} messages in {ctx.channel.name} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
     await ctx.channel.purge(limit=amount)
 
 cogs = [
