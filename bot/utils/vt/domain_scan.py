@@ -1,9 +1,7 @@
-# Finished
 from urllib.parse import urlparse
 import base64 as b64
 import aiohttp
 
-# ---- Functions ----
 async def valid_url(url: str) -> bool:
     """Check if the URL is valid and exists."""
     try:
@@ -42,9 +40,9 @@ async def url_report(url: str, api_key: str):
     request_url = f"https://www.virustotal.com/api/v3/urls/{url_encoded}"
 
     try:
-        async with aiohttp.ClientSession() as session:  # HTTP session for requests
+        async with aiohttp.ClientSession() as session:  
             async with session.get(request_url, headers=headers) as response:
-                response.raise_for_status()  # Raise exception if status is not 200
+                response.raise_for_status()  
                 data = await response.json()
 
                 if "data" in data:
