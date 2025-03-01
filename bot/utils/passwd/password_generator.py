@@ -38,15 +38,14 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
     Returns a tuple `(password, entropy)`.
     """
 
+    # Pre-Conditions
     if type(length) != int: length = MIN_PASS_LEN
     elif length > MAX_PASS_LEN: length = MAX_PASS_LEN
     elif length < MIN_PASS_LEN: length = MIN_PASS_LEN
 
-
     # Add characters to password character list
     password = choice(string.ascii_lowercase)
     characters = string.ascii_lowercase
-
 
     if capital: 
         characters += string.ascii_uppercase
@@ -56,12 +55,11 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
         characters += string.digits
         password += choice(string.digits)
 
-    if symbols: 
-        characters = string.printable[:89] + string.printable[91:94]
-        password += choice(characters[62:89])
+    if symbols:
+        special_chars = string.printable[62:89] + string.printable[91:94]  # Backsticks mess up discord messages
+        characters += special_chars
+        password += choice(special_chars)
     
-
-
     while len(password) < length:
         password += choice(characters)
 
@@ -87,7 +85,6 @@ def memorable_password_generator(words: int = 5) -> tuple[str, float]:
     if type(words) != int: words = MIN_PASS_WORDS
     elif words > MAX_PASS_WORDS: words = MAX_PASS_WORDS
     elif words < MIN_PASS_WORDS: words = MIN_PASS_WORDS
-
 
     password = "".join(f"{choice(WORDS)}{randbelow(10)}-" for _ in range(words))
     return password[:-1], entropy(len(WORDS), password)   # Remove last character (-)
