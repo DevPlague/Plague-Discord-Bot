@@ -1,8 +1,6 @@
-# Finished
 import aiohttp
 from ipaddress import ip_address
 
-# ---- Funciones ----
 async def valid_ip(ip: str) -> bool:
     """Check if the IP address is valid and public."""
     try:
@@ -25,9 +23,9 @@ async def ip_report(ip: str, api_key: str):
     url = f"https://www.virustotal.com/api/v3/ip_addresses/{ip}"
 
     try:
-        async with aiohttp.ClientSession() as session:#HTTP session to make requests
+        async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
-                response.raise_for_status() #Raise an exception if the response status is not 200
+                response.raise_for_status() 
                 data = await response.json()
                 
                 if "data" in data:
