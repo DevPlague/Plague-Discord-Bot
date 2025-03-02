@@ -95,7 +95,7 @@ class PasswordCog(commands.Cog):
 
         embed = discord.Embed(
             title = f"Random Password Generator 🔒",
-            description = f"""◈ **Words**: {words}\n\n◈ **Lenght**: {len(passwd)}\n\n◈ **Password**: **{passwd}** \n\n❗ This password is ___\"{strength}\"___, it has an entropy of {entropy:.2f}.""",
+            description = f"""◈ **Words**: {words}\n\n◈ **Length**: {len(passwd)}\n\n◈ **Password**: **{passwd}** \n\n❗ This password is ___\"{strength}\"___, it has an entropy of {entropy:.2f}.""",
             colour = discord.Colour.from_rgb(106, 71, 249)
         )
         embed.set_footer(text="Top Secret (Destroy this message after reading) 💼")

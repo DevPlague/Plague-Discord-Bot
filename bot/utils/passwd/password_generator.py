@@ -56,7 +56,7 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
         password += choice(string.digits)
 
     if symbols:
-        special_chars = string.printable[62:89] + string.printable[91:94]  # Backsticks mess up discord messages
+        special_chars = string.printable[62:89] + string.printable[91:94]  # Backticks mess up discord messages
         characters += special_chars
         password += choice(special_chars)
     
