@@ -21,21 +21,21 @@ MAX_PASS_WORDS = 10
 WORDS = read_words()
 
 def random_password_generator(length: int = 20, capital: bool = True, numbers: bool = True, symbols: bool = True) -> tuple[str, float]:
-    """
-    Generates a random password, consisting of a string of random ASCII characters.
-    Passwords are guaranteed to contain at least one of each character type, if specified.
+    """Generates a random password consisting of ASCII characters.
 
-    Passwords do not include whitespace characters: `" ", "\\n", "\\r", "\\t"`
+    Passwords are guaranteed to contain at least one of each specified character type.
+    Whitespace characters are **excluded**: `" "`, `"\n"`, `"\r"`, `"\t"`.
 
-    E.g. `$[OyjIJH=iph[njS&48z`
+    E.g: `$[OyjIJH=iph[njS&48z`
 
-    Parameters:
-        `length`: Length of the password. Passwords must be 8-64 characters long.
-        `capital`: Use capital letters.
-        `numbers`: Use numbers.
-        `symbols`: Use special characters.
-    
-    Returns a tuple `(password, entropy)`.
+    Arguments:
+        `length`: Length of the password. Must be between 8 and 64 characters.
+        `capital`: If `True`, include uppercase letters.
+        `numbers`: If `True`, include numbers.
+        `symbols`: If `True`, include special characters (" ` " excluded).
+
+    Returns:
+        `tuple[str, float]`: A tuple containing the generated password and its entropy.
     """
 
     # Pre-Conditions
@@ -71,14 +71,17 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
 
 
 def memorable_password_generator(words: int = 5) -> tuple[str, float]:
-    """
-    Generates a random memorable password. Passwords are made of random words and a number, separated by "-".
-    E.g. `Three7-Production4-Deer9-Satisfied5`
+    """Generates a random memorable password.
 
-    Parameters:
-        `words`: Number of words used to create the password.
+    Passwords are made of random words and a number, separated by `"-"` characters.
     
-    Returns a tuple `(password, entropy)`.
+    - E.g. `Three7-Production4-Deer9-Satisfied5`
+
+    Arguments:
+        `words`: Number of words used to create the password.
+
+    Returns:
+        `tuple[str, float]`: A tuple containing the generated password and its entropy.
     """
 
     # Pre-Conditions
@@ -92,32 +95,20 @@ def memorable_password_generator(words: int = 5) -> tuple[str, float]:
 
 def entropy(n_characters: int, password: str) -> float:
     """
-    Returns the entropy of a password.
+    Calculates the entropy of a password.
+
     Parameters:
-        `n_characters`: Number of possible characters used to create `password`.
+        `n_characters`: Number of possible characters used to create the password.
         `password`: Your password.
 
-    `n_character` increases when you add different characters into your password:
-    - Numbers (Range size: 10)
-    - Lowercase Latin letters (Range size: 26)
-    - Uppercase Latin letters (Range size: 26)
-    - Special symbols (Range size: 32)
+    Returns:
+        `float`: The entropy of the password.
+        
+    Notes:
+        The value of `n_characters` increases when you add different character types into your password:
+        - Numbers (Range size: 10)
+        - Lowercase Latin letters (Range size: 26)
+        - Uppercase Latin letters (Range size: 26)
+        - Special symbols (Range size: 32)
     """
-
     return len(password) * log(n_characters, 2)
-
-
-if __name__ == "__main__":
-    random = True
-
-    if random:
-        passw = random_password_generator(8, False, False, False)
-    else:
-        passw = memorable_password_generator(1)
-    
-    if passw[1] < 50: strength = "Vulnerable"
-    elif passw[1] < 75: strength = "Medium"
-    elif passw[1] < 90: strength = "Strong"
-    else: strength = "Very Strong"
-
-    print(f"Password: {passw[0]}\nEntropy: {passw[1]:.2f}\nStrength: {strength}")
