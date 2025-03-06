@@ -130,7 +130,7 @@ def verify_hash(hash_func: str, original_text: str, hash: str) -> bool:
         `hash`: The hash to compare the original text against.
 
     Returns:
-        True if the hash matches the original text using the specified hash function, False otherwise.
+        `bool`: `True` if the hash matches the original text using the specified hash function, `False` otherwise.
     """
 
     valid = False
