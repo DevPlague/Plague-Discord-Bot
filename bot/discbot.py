@@ -27,7 +27,7 @@ bot = commands.Bot(command_prefix="!",
                    intents=intents,
                    case_insensitive=True,
                    max_messages=100,
-                   heartbeat_timeout=150.0) #heartbeat timeout is a variable that is used for the bot to know when to reconnect to discord
+                   heartbeat_timeout=150.0)
 
 # Make sure the bot is deployed correctly
 @bot.event
@@ -60,7 +60,8 @@ async def purge(ctx, amount=5):
 cogs = [
     "cogs.rs_commands",
     "cogs.vt_commands",
-    "cogs.passwd_commands"
+    "cogs.passwd_commands",
+    "cogs.cod_commands"
 ]
 
 
