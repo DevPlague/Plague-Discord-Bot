@@ -139,7 +139,7 @@ class CoderCommands(commands.Cog):
         )
         
         embed.set_footer(text="This job is boring as hell 🧮")
-        embed.set_thumbnail(url="https://images.wikidexcdn.net/mwuploads/wikidex/5/54/latest/20231218183826/Necrosol_EP.pnghttps://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/5/54/latest/20231218183826/Necrosol_EP.png") 
         
         logger.info(f" Sent decoded text to {ctx.author.name}\n")
