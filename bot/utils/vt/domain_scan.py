@@ -16,17 +16,16 @@ async def valid_url(url: str) -> bool:
                 return 200 <= response.status < 400
 
     except aiohttp.ClientError as e:
-        print(f"[Error] Client error checking URL: {e}")
         return False
+
     except Exception as e:
-        print(f"[Error] Unexpected error checking URL: {e}")
         return False
 
 
 async def url_report(url: str, api_key: str):
     """Request a report of a URL from VirusTotal API."""
     if not await valid_url(url):
-        return f"Did you just unlock a new level of imagination? That URL doesn't exist."
+        return False
 
     headers = {
         "x-apikey": str(api_key),

@@ -12,7 +12,7 @@ class VTApiHandler:
             raise ValueError("API_KEY is not set. Cannot request to VirusTotal API.")
 
 
-    async def ip_scan(self, ip: str):
+    async def ip_result(self, ip: str):
         """Send the request to IP endpoint and returns the result."""
         result = await ip_report(ip, self.API_KEY)
         self.logger.info(f" IP scan result for {ip}: {result}")
@@ -20,10 +20,10 @@ class VTApiHandler:
 
     def sync_ip_scan(self, ip: str):
         """Send the request synchronously and returns the result."""
-        return asyncio.run(self.ip_scan(ip))
+        return asyncio.run(self.ip_result(ip))
 
 
-    async def url_scan(self, url: str):
+    async def url_result(self, url: str):
         """Send the request asynchronously and returns the result."""
         result = await url_report(url, self.API_KEY)
         self.logger.info(f" URL scan result for {url}: {result}")
@@ -31,4 +31,4 @@ class VTApiHandler:
 
     def sync_url_scan(self, url: str):
         """Send the request synchronously and returns the result."""
-        return asyncio.run(self.url_scan(url))
+        return asyncio.run(self.url_result(url))

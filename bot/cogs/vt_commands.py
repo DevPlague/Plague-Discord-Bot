@@ -17,7 +17,7 @@ class VirusTotalCog(commands.Cog):
         self.bot = bot
         self.apiHandler = VTApiHandler(logger, str(VT_API_KEY))
 
-    @commands.command(help="Check if a URL is malicious using VirusTotal API and return a report if exists. \nUsage: !vt_url <url>")
+    @commands.command(help="Check if a URL is malicious using VirusTotal API and return a report if exists. \nUsage: `!vt url <url>`")
     async def vt_url(self, ctx, url: str):
         """Check if a URL is malicious using VirusTotal API and return a report if exists.
 
@@ -25,10 +25,13 @@ class VirusTotalCog(commands.Cog):
             url (str): URL to check.
         """
         logger.info(f" Report asked for URL: {url} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-        
         await ctx.message.add_reaction("🔍")
-        result = await self.apiHandler.url_scan(url)
 
+        result = await self.apiHandler.url_result(url)
+
+        if result is False:
+            logger.error(f" Invalid URL: {url}\n")
+            return await ctx.send("Invalid URL. Verify that the format is correct or that it exists at all.")
 
         if isinstance(result, dict):
             logger.info(f" Report acquired for URL: {url} \nUser: {ctx.author.name}\n")
@@ -72,7 +75,7 @@ class VirusTotalCog(commands.Cog):
 
 
 
-    @commands.command(help="Check if an IP is malicious using VirusTotal API and return a report if exists. \n Usage: !vt_ip <ip>")
+    @commands.command(help="Check if an IP is malicious using VirusTotal API and return a report if exists. \n Usage: `!vt_ip <ip>`")
     async def vt_ip(self, ctx, ip: str):
         """Check if an IP is malicious using VirusTotal API and return a report if exists.
 
@@ -80,10 +83,13 @@ class VirusTotalCog(commands.Cog):
             ip (str): IP address to check.
         """
         logger.info(f" Report asked for IP: {ip} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-
         await ctx.message.add_reaction("🔍")
-        result = await self.apiHandler.ip_scan(ip)
 
+        result = await self.apiHandler.ip_result(ip)
+
+        if result is False:
+            logger.error(f" Invalid IP address: {ip}\n")
+            return await ctx.send("Invalid IP address. Verify that is a public IP and it has a valid format.")
 
         if isinstance(result, dict):
             logger.info(f" Report acquired for IP: {ip} \nUser: {ctx.author.name}\n")

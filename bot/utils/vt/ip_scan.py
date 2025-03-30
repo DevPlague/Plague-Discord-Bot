@@ -5,14 +5,14 @@ async def valid_ip(ip: str) -> bool:
     """Check if the IP address is valid and public."""
     try:
         ipv4 = ip_address(ip)
-        return ipv4.is_global #Check if the IP address is public
+        return ipv4.is_global
     except ValueError:
         return False
 
 async def ip_report(ip: str, api_key: str): 
     """Request a report of an IP address from VirusTotal API."""
     if not await valid_ip(ip):
-        return f"You just give me a bunch of numbers. This IP isn't valid."
+        return False
     
     headers = {
         "x-apikey": str(api_key),
