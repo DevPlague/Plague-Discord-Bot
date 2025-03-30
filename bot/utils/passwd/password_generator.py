@@ -24,7 +24,7 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
     """Generates a random password consisting of ASCII characters.
 
     Passwords are guaranteed to contain at least one of each specified character type.
-    Whitespace characters are **excluded**: `" "`, `"\n"`, `"\r"`, `"\t"`.
+    Whitespace characters are **excluded**: `" "`, `"\\n"`, `"\\r"`, `"\\t"`.
 
     E.g: `$[OyjIJH=iph[njS&48z`
 
@@ -35,7 +35,7 @@ def random_password_generator(length: int = 20, capital: bool = True, numbers: b
         `symbols`: If `True`, include special characters (" ` " excluded).
 
     Returns:
-        `tuple[str, float]`: A tuple containing the generated password and its entropy.
+        A tuple containing the generated password and its entropy.
     """
 
     # Pre-Conditions
@@ -81,7 +81,7 @@ def memorable_password_generator(words: int = 5) -> tuple[str, float]:
         `words`: Number of words used to create the password.
 
     Returns:
-        `tuple[str, float]`: A tuple containing the generated password and its entropy.
+        A tuple containing the generated password and its entropy.
     """
 
     # Pre-Conditions
@@ -90,7 +90,7 @@ def memorable_password_generator(words: int = 5) -> tuple[str, float]:
     elif words < MIN_PASS_WORDS: words = MIN_PASS_WORDS
 
     password = "".join(f"{choice(WORDS)}{randbelow(10)}-" for _ in range(words))
-    return password[:-1], entropy(len(WORDS), password)   # Remove last character (-)
+    return password[:-1], entropy(len(WORDS), password)
 
 
 def entropy(n_characters: int, password: str) -> float:
