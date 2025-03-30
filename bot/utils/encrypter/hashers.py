@@ -1,13 +1,13 @@
 from hashlib import md5, sha256, sha3_256
-from bcrypt import hashpw, gensalt, checkpw     # Necesita ser instalado: pip install bcrypt
-from argon2 import PasswordHasher, Type         # Necesita ser instalado: pip install argon2-cffi
+from bcrypt import hashpw, gensalt, checkpw
+from argon2 import PasswordHasher, Type         
 
 # Bcrypt function variables. Source: https://bcrypt-generator.com/
 DEAULT_SALT_ROUNDS = 12
 MAX_SALT_ROUNDS = 20
 MIN_SALT_ROUNDS = 1
 
-# Maximum and minimum allowed values for Argon2 parameters. Source: https://argon2.online/
+# Max. and min. allowed values for Argon2 parameters. Source: https://argon2.online/
 MAX_MEMORY_COST = 1000000
 MAX_PARALLELISM = 10
 MAX_ITERATIONS = 20
@@ -19,7 +19,6 @@ MIN_ITERATIONS = 1
 MIN_HASH_LENGTH = 4
 
 # PasswordHasher object use to verify Argon2 hashes. 
-# Used to avoid creating an instance each time verify_hash() is called.
 verifier = PasswordHasher()
 
 
@@ -38,12 +37,12 @@ def SHA_3(text: str):
 
 
 # Mainly used for savely storing passwords. Reason why we use "password" and not "text".
-def Bcrypt(password: str, rounds: int = DEAULT_SALT_ROUNDS):
+def Bcrypt(passwd: str, rounds: int = DEAULT_SALT_ROUNDS):
     """
     Hashes a password using the bcrypt algorithm.
 
     Args:
-        `password`: The password to be hashed.
+        `passwd`: The password to be hashed.
         `rounds`: The number of salt rounds to use.
 
     Returns:
@@ -56,19 +55,19 @@ def Bcrypt(password: str, rounds: int = DEAULT_SALT_ROUNDS):
     bcrypt_hash = None
 
     if MIN_SALT_ROUNDS <= rounds <= MAX_SALT_ROUNDS:
-        bcrypt_hash = hashpw(password.encode(), gensalt(rounds)).decode()
+        bcrypt_hash = hashpw(passwd.encode(), gensalt(rounds)).decode()
     else:
         print(f"Invalid parameter: 'rounds' must be between {MIN_SALT_ROUNDS}-{MAX_SALT_ROUNDS}.")
 
     return bcrypt_hash
 
 
-def Argon2(password: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id") -> str | None:
+def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id") -> str | None:
     """
     Hashes a password using the Argon2 algorithm.
 
     Args:
-        `password`: The password to be hashed.
+        `passwd`: The password to be hashed.
         `iterations`: The number of iterations (time cost). 
         `memory_cost`: The memory usage in KB. 
         `parallelism`: The number of threads for parallel processing. 
@@ -113,7 +112,7 @@ def Argon2(password: str, iterations: int = 3, memory_cost: int = 65536, paralle
     ph = PasswordHasher(iterations, memory_cost, parallelism, hash_len, type = type)
     
     try:
-        argon2_hash = ph.hash(password)
+        argon2_hash = ph.hash(passwd)
     except:
         print("An unexpected error ocurred. Hashing failed.")
 

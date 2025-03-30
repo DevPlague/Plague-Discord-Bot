@@ -1,58 +1,45 @@
 from base64 import b64encode, b64decode
 from binascii import Error
 from urllib.parse import quote, unquote
+from codecs import encode as cd
 
-
-# ENCODING FUNCTIONS (unused, too short)
-"""
-! Unused functions. Too short to be worth calling in the encode() function.
-def toBinary(text: str):
-    return " ".join(format(c, '08b') for c in bytearray(text, "utf-8"))
-
-def toOctal(text: str):
-    return " ".join(format(c, '03o') for c in bytearray(text, "utf-8"))
-
-def toDecimal(text: str):
-    return " ".join(format(c, 'd') for c in bytearray(text, "utf-8"))
-
-def toHex(text: str):
-    return " ".join(format(c, 'X') for c in bytearray(text, "utf-8"))
-
-def toBase64(text: str):
-    return b64encode(bytearray(text, "utf-8")).decode()
-
-def URLEncode(text: str):
-    return quote(text)
-"""
-
-# Master Encoding Function
+# MASTER ENCODING FUNCTION
 def encode(format: str, text: str) -> str | None:
-    """Encodes the given text into a given format (`binary`, `octal`, `hex`, `base64` or `URL`).
+    """Encodes the given text into a given format (`binary`, `octal`, `hex`, `base64`, `URL` or `ROT13`).
 
     Args:
-        `format`: Encoding format. Avilable formats: `"b"`, `"o"`, `"x"`, `"X"`, `"b64"`, `"url"`.
+        `format`: Encoding format. Available formats: `"b"`, `"o"`, `"x"`, `"X"`, `"b64"`, `"url"`, `"rot13"`.
+
         `text`: The text to be encoded.
 
     Returns:
         `str|None`: The encoded text as a string, or `None` if the given format is invalid.
     
     Note: Both `"x"` and `"X"` formats encode the given text into a Hexadecimal string. 
-          `"x"` uses lowercase letters, `"X"` uses uppercase letters.
+        `"x"` uses lowercase letters, `"X"` uses uppercase letters.
     """
 
     encoded_text = None
 
     match format:
-        case "b" | "o" | "d" | "x" | "X" :
-            if format == "b": format = "08b"
-            elif format == "o": format = "03o"
-            encoded_text = " ".join(format(c, format) for c in bytearray(text, "utf-8"))
-        
+        case "b" | "o" | "x" | "X":
+            if format == "b":
+                format_pattern = "08b"
+            elif format == "o":
+                format_pattern = "03o"
+            else:
+                format_pattern = format
+
+            encoded_text = " ".join(f"{c:{format_pattern}}" for c in bytearray(text, "utf-8"))
+
         case "b64":
             encoded_text = b64encode(bytearray(text, "utf-8")).decode()
         
         case "url":
             encoded_text = quote(text)
+        
+        case "rot13":
+            encoded_text = cd(text, "rot_13")
         
         case _:
             print(f"Invalid format: '{format}'.")
@@ -62,7 +49,7 @@ def encode(format: str, text: str) -> str | None:
 
 # DECODING FUNCTIONS
 def fromBinary(text: str) -> str | None:
-    """Decodes a binary-encoded string into its corresponding text.
+    """Decodes a binary-encoded string.
 
     Args:
         `text`: A string containing binary-encoded values, with optional spaces.
@@ -82,7 +69,7 @@ def fromBinary(text: str) -> str | None:
         decoded_string = "".join(chr(int(i, 2)) for i in binary_chars)
         decoded_string = decoded_string.encode("latin-1").decode("utf-8")
     else:
-        print(f"Invalid Binary string: {text}.")
+        print(f"Invalid binary string: {text}.")
     
     return decoded_string
 
@@ -106,7 +93,7 @@ def fromOctal(text: str) -> str | None:
         decoded_string = "".join(chr(int(i, 8)) for i in octal_chars)
         decoded_string = decoded_string.encode("latin-1").decode("utf-8")
     else:
-        print("Invalid Octal string.")
+        print("Invalid octal string.")
         decoded_string = None
     
     return decoded_string
@@ -133,10 +120,10 @@ def fromDecimal(text: str) -> str | None:
         decoded_string = decoded_string.encode("latin-1").decode("utf-8")
 
     except ValueError:
-        print(f"Invalid Decimal String: {ascii_chars}.")
+        print(f"Invalid decimal string: {ascii_chars}.")
 
     except OverflowError:
-        print("Invalid Decimal String. Characters must be separated.\nE.g: 72 101 108 108 111")
+        print("Invalid decimal string. Characters must be separated.\nE.g: 72 101 108 108 111")
 
     return decoded_string
 
@@ -159,9 +146,9 @@ def fromHex(text: str) -> str | None:
         try:
             decoded_string = bytes.fromhex(text).decode("utf-8")
         except UnicodeDecodeError:
-            print(f"Invalid Hexadecimal string: {text}.")
+            print(f"Invalid hexadecimal string: {text}.")
     else:
-        print(f"Invalid length for Hexadecimal string: {len(text)} characters (should be even).")
+        print(f"Invalid length for hexadecimal string: {len(text)} characters (should be even).")
 
     return decoded_string
 
@@ -197,17 +184,27 @@ def URLDecode(text: str) -> str:
         `str`: The decoded string.
 
     Note:
-        - By default, percent-encoded sequences are decoded with UTF-8, and invalid
-          sequences are replaced by a placeholder character.
+        - By default, percent-encoded sequences are decoded with UTF-8, and invalid sequences are replaced by a placeholder character.
     """
     return unquote(text)
 
-# Master Decoding Function
+def ROT13Decode(text: str) -> str:
+    """Decodes a ROT13-encoded string into its corresponding text.
+
+    Args:
+        `text`: The ROT13-encoded string.
+
+    Returns:
+        `str`: The decoded string.
+    """
+    return cd(text, "rot_13")
+
+# MASTER DECODING FUNCTION
 def decode(format: str, text: str) -> str | None:
     """Decodes the given text into a `UTF-8` string.
 
     Args:
-        `format`: Encoded text format. Avilable formats: `"b"`, `"o"`, `"x"`, `"b64"`, `"url"`.
+        `format`: Encoded text format. Avilable formats: `"b"`, `"o"`, `"x"`, `"b64"`, `"url"`, `"rot13"`.
         `text`: The text to be decoded.
     
     Returns:
@@ -222,6 +219,7 @@ def decode(format: str, text: str) -> str | None:
         case "x" | "X": decoded_string = fromHex(text)
         case "b64": decoded_string = fromBase64(text)
         case "url": decoded_string = URLDecode(text)
+        case "rot13": decoded_string = ROT13Decode(text)
         case _: print(f"Invalid format: '{format}'.")
     
     return decoded_string
