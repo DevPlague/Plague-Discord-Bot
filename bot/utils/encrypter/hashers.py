@@ -1,9 +1,9 @@
-from hashlib import md5, sha256, sha3_256
+from hashlib import md5, sha256, sha3_256, sha512
 from bcrypt import hashpw, gensalt, checkpw
 from argon2 import PasswordHasher, Type         
 
 # Bcrypt function variables. Source: https://bcrypt-generator.com/
-DEAULT_SALT_ROUNDS = 12
+DEFAULT_SALT_ROUNDS = 12
 MAX_SALT_ROUNDS = 20
 MIN_SALT_ROUNDS = 1
 
@@ -22,7 +22,7 @@ MIN_HASH_LENGTH = 4
 verifier = PasswordHasher()
 
 
-# FUNCTIONS
+# SIMPLE HASHING
 def MD5(text: str):
     """Hashes `text` using the MD5 algorithm."""
     return md5(text.encode()).hexdigest()
@@ -35,9 +35,12 @@ def SHA_3(text: str):
     """Hashes `text` using the SHA-3 algorithm."""
     return sha3_256(text.encode()).hexdigest()
 
+def SHA_512(text: str):
+    """Hashes `text` using the SHA-512 algorithm."""
+    return sha512(text.encode()).hexdigest()
 
 # Mainly used for savely storing passwords. Reason why we use "password" and not "text".
-def Bcrypt(passwd: str, rounds: int = DEAULT_SALT_ROUNDS):
+def Bcrypt(passwd: str, rounds: int = DEFAULT_SALT_ROUNDS):
     """
     Hashes a password using the bcrypt algorithm.
 
@@ -62,7 +65,7 @@ def Bcrypt(passwd: str, rounds: int = DEAULT_SALT_ROUNDS):
     return bcrypt_hash
 
 
-def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id") -> str | None:
+def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str | Type = "id") -> str | None:
     """
     Hashes a password using the Argon2 algorithm.
 
@@ -76,10 +79,6 @@ def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, paralleli
 
     Returns:
         `str|None`: The hashed password as a string if successful, or `None` if an invalid parameter is provided or an error occurs.
-
-    Raises:
-        ValueError: If any parameter is outside its valid range.
-        Exception: If an unexpected error occurs during hashing.
 
     Note:
         - A higher number of iterations and memory cost increases security, but also computation time.
@@ -99,10 +98,9 @@ def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, paralleli
             print(f"Invalid parameter: '{param}'.")
             return None
 
-    # Type conversion
-    if type == "id": type = Type.ID
-    elif type == "i": type = Type.I
-    elif type == "d": type = Type.D
+    if type == "id": type = Type.ID #type: ignore
+    elif type == "i": type = Type.I #type: ignore
+    elif type == "d": type = Type.D #type: ignore
     else: 
         print("Invalid parameter: 'type'.")
         return None
@@ -119,6 +117,7 @@ def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, paralleli
     return argon2_hash
     
 
+# CHECKSUM FUNCTION
 def verify_hash(hash_func: str, original_text: str, hash: str) -> bool:
     """
     Verifies if the given hash matches the original text using the specified hash function.
@@ -129,19 +128,22 @@ def verify_hash(hash_func: str, original_text: str, hash: str) -> bool:
         `hash`: The hash to compare the original text against.
 
     Returns:
-        `bool`: `True` if the hash matches the original text using the specified hash function, `False` otherwise.
+        `bool`: `True` if the hash matches the original text using the specified hash function.
     """
 
+    text_to_bytes = original_text.encode()
     valid = False
 
     match hash_func:
-        case "md5": valid = md5(original_text.encode()).hexdigest() == hash
+        case "md5": valid = MD5(original_text) == hash
 
-        case "sha256": valid = sha256(original_text.encode()).hexdigest() == hash
+        case "sha256": valid = SHA_256(original_text) == hash
 
-        case "sha3": valid = sha3_256(original_text.encode()).hexdigest() == hash
+        case "sha3": valid = SHA_3(original_text) == hash
 
-        case "bcrypt": checkpw(original_text, hash.encode())
+        case "sha512": valid = SHA_512(original_text) == hash
+
+        case "bcrypt": checkpw(text_to_bytes, hash.encode())
 
         case "argon2": 
             try:
@@ -153,3 +155,4 @@ def verify_hash(hash_func: str, original_text: str, hash: str) -> bool:
             print(f"Invalid hash function: '{hash_func}'.")
     
     return valid
+
