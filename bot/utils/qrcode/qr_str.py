@@ -41,7 +41,7 @@ def generate_qr(data: str, logo_url: Optional[str] = None) -> io.BytesIO:
         `logo_url`: URL to the logo to insert in the center of the QR.
 
     Returns:
-        `io.BytesIO`: A BytesIO object containing the generated QR code.
+        `io.BytesIO: A BytesIO object containing the generated QR code.
     """
     qr = qrcode.QRCode(
         version=4,
@@ -65,14 +65,14 @@ def generate_qr(data: str, logo_url: Optional[str] = None) -> io.BytesIO:
         img.paste(logo, center, mask=logo)
 
     output = io.BytesIO()
-    img.save(output, format="JPEG")
+    img.save(output, format="PNG")
     output.seek(0)
     return output
 
 
 if __name__ == "__main__":
     url = "https://discord.com"
-    logo_url = "https://pngimg.com/d/discord_PNG3.png"
+    logo_url = "https://pngimg.com/uploads/discord/discord_PNG3.png"
 
     try:
         qr_image_bytes = generate_qr(url, logo_url)
