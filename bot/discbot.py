@@ -61,7 +61,8 @@ cogs = [
     "cogs.rs_commands",
     "cogs.vt_commands",
     "cogs.passwd_commands",
-    "cogs.cod_commands"
+    "cogs.cod_commands",
+    "cogs.urlexp_commands"
 ]
 
 

@@ -17,9 +17,9 @@ class VirusTotalCog(commands.Cog):
         self.bot = bot
         self.apiHandler = VTApiHandler(logger, str(VT_API_KEY))
 
-    @commands.command(help="Check if a URL is malicious using VirusTotal API and return a report if exists. \nUsage: `!vt url <url>`")
+    @commands.command(help="Checks if a URL is malicious using VirusTotal API and return a report if exists. \nUsage: `!vt url <url>`")
     async def vt_url(self, ctx, url: str):
-        """Check if a URL is malicious using VirusTotal API and return a report if exists.
+        """Checks if a URL is malicious using VirusTotal API and return a report if exists.
 
         Args:
             url (str): URL to check.
