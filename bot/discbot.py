@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Discord-Bot")
 
 if DISCORD_TOKEN is None:
-    logger.error(" No Discord token found. Please create a .env file with the DISCORD_TOKEN variable.")
+    logger.error(" No Discord token found, bot will not start. Please create a .env file with the DISCORD_TOKEN variable.")
 
 
 # Permissions for the bot
@@ -23,7 +23,7 @@ intents.messages = True
 intents.message_content = True
 intents.guilds = True
 
-bot = commands.Bot(command_prefix="!",
+bot = commands.Bot(command_prefix="$",
                    intents=intents,
                    case_insensitive=True,
                    max_messages=100,
@@ -44,8 +44,7 @@ async def on_ready():
     logger.info(f" Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
     await bot.change_presence(activity=discord.Game(name="🐛🔥 Repelling bugs!"))
 
-# Commands
-@bot.command(help="Clear a specified number of messages in the channel (default is 5)")
+@bot.command(group="Common")
 async def purge(ctx, amount=5):
     """Clear messages in a channel (default: 5)."""
     if not ctx.author.guild_permissions.manage_messages:
@@ -70,10 +69,10 @@ async def load_cogs(bot):
         await bot.load_extension(cog)
 
 async def main():
-        async with bot:
-            await load_cogs(bot)
-            await bot.start(str(DISCORD_TOKEN))
+    async with bot:
+        await load_cogs(bot)
+        await bot.start(str(DISCORD_TOKEN))
 
-# Start the bot
+
 if __name__ == "__main__":
     asyncio.run(main())

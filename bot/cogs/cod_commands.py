@@ -14,7 +14,7 @@ class CoderCommands(commands.Cog):
         self.bot = bot
 
 # ENCODER COMMAND
-    @commands.command(help="Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).\nUsage: `!encode <format> <text>`")
+    @commands.command(group="Codify")
     async def encode(self, ctx, format: str, *args: str):
         """Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).
 
@@ -72,7 +72,7 @@ class CoderCommands(commands.Cog):
 
 
 # DECODER COMMAND
-    @commands.command(help="Decodes the given text into its corresponding text (`b`: binary, `o`: octal, `d`: decimal, `x`: hex, `X`: uppercase hex, `b64`: base64, `url`: URL, `rot13`: ROT13).\nUsage: !decode <format> <text>")
+    @commands.command(group="Codify")
     async def decode(self, ctx, format: str, *args: str):
         """Decodes the given text into its corresponding text (`b: binary`, `o: octal`, `d: decimal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`).
         
@@ -154,7 +154,7 @@ class HasherCommands(commands.Cog):
         self.bot = bot
 
 # SIMPLE HASHING
-    @commands.command(help="Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).\nUsage: `!hash <algorithm> <text>`")
+    @commands.command(group="Hash")
     async def hashing(self, ctx, algorithm: str, *args: str):
         """Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).
         
@@ -215,7 +215,7 @@ class HasherCommands(commands.Cog):
 
 
 # ARGON2
-    @commands.command(help="Hashes the given password using Argon2. Note: Don't use whitespaces in the password.\nUsage: `!argon2 <password> <iterations> <memory_cost> <parallelism> <hash_len> <type>`\nDefault values: iterations = `3` (1-20 min-max), memory_cost = `65536` (80-1000000 min-max), parallelism = `4` (1-10 min-max), hash_len = `32` (4-100 min-max), type = `id` (`id`, `i`, `d`)")
+    @commands.command(group="Hash")
     async def argon2(self, ctx, password: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id"):
         """Hashes the given password using Argon2. (Don't use whitespaces in the password)
         
@@ -263,87 +263,86 @@ class HasherCommands(commands.Cog):
 
 
 # BCRYPT
-@commands.command(help="Hashes the given password using Bcrypt. Note: Don't use whitespaces in the password.\nUsage: `!bcrypt <password> <rounds>`\nDefault value: rounds = `12` (1-20 min-max)")
-async def bcrypt(self, ctx, password: str, rounds: int = 12):
-    """Hashes the given password using Bcrypt. (Don't use whitespaces in the password)
-    
-    Args:
-        password (str): The password to be hashed.
-        rounds (int, optional): Defaults to `12`. Maximum value: `20`. Minimum value: `1`.
-    """
-    logger.info(f" Received request for Bcrypt hashing (Rounds: {rounds})\nUser: {ctx.author.name}")
-    await ctx.message.add_reaction("🔄")
+    @commands.command(group="Hash") 
+    async def bcrypt(self, ctx, password: str, rounds: int = 12):
+        """Hashes the given password using Bcrypt. (Don't use whitespaces in the password)
+        
+        Args:
+            password (str): The password to be hashed.
+            rounds (int, optional): Defaults to `12`. Maximum value: `20`. Minimum value: `1`.
+        """
+        logger.info(f" Received request for Bcrypt hashing (Rounds: {rounds})\nUser: {ctx.author.name}")
+        await ctx.message.add_reaction("🔄")
 
-    # Pre-Conditions
-    if password is None:
-        logger.error(f" Invalid password given")
-        return await ctx.send("Empty or invalid password.")
-
-
-    hashed_password = Bcrypt(password, rounds)
+        # Pre-Conditions
+        if password is None:
+            logger.error(f" Invalid password given")
+            return await ctx.send("Empty or invalid password.")
 
 
-    # Post-Conditions
-    if hashed_password is None:
-        logger.error(f" Error while hashing with Bcrypt\n")
-        return await ctx.send("Error while hashing.  Check if you have used whitespaces, or the given parameters are under/over the limits established.")
-
-    if len(hashed_password) > 1900:
-        logger.error(f" Hashed password is too long: {len(hashed_password)}\n")
-        return await ctx.send("Hashed password is too long (message length limit: 2000 characters).")
-
-    embed = discord.Embed(
-        title = f"Bcrypt Hashed Password 🔄",
-        description = f"""◈ **Password**: {password}\n\n◈ **Hashed Password**: ```{hashed_password}``` \n\n""",
-        colour = discord.Colour.from_rgb(135, 206, 235)
-    )
-    embed.set_footer(text="Somehow better than encoding 🕹️")
-    embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
-    embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png")
-
-    logger.info(f" Sent Bcrypt hashed password to {ctx.author.name}\n")
-    await ctx.send(embed=embed)
+        hashed_password = Bcrypt(password, rounds)
 
 
-# VERIFY HASH
-@commands.command(help="Verify if the given password matches the given hash.\nUsage: `!vhash <hash_func> <hash> <original_text>`\nAvailable hash functions: `md5`, `sha256`, `sha3`, `sha512`, `bcrypt`, `argon2`")
-async def vhash(self, ctx, type: str, hash: str, *args: str):
-    """Verify if the given password matches the given hash.
-    
-    Args:
-        hash_func (str): The name of the hash function to use ('md5', 'sha256', 'sha3', 'sha512', 'bcrypt', or 'argon2').
-        hash (str): The hash to compare the original text against.
-        args (str): The original text to compare with the given hash.
-    """
-    HASHER_TYPESv2 = HASHER_TYPES + ["bcrypt", "argon2"]
-    
-    text = " ".join(args)
-    logger.info(f" Received request for verifying hash: \nHash Function: {type} - Hash: {hash} - Original Text: {text} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-    await ctx.message.add_reaction("🔑✅")
-    
-    # Pre-Conditions
-    if hash is None:
-        logger.error(f" Invalid hash given")
-        return await ctx.send("Empty or invalid hash.")
+        # Post-Conditions
+        if hashed_password is None:
+            logger.error(f" Error while hashing with Bcrypt\n")
+            return await ctx.send("Error while hashing.  Check if you have used whitespaces, or the given parameters are under/over the limits established.")
 
-    if text is None:
-        logger.error(f" Invalid text given")
-        return await ctx.send("Empty or invalid text.")
+        if len(hashed_password) > 1900:
+            logger.error(f" Hashed password is too long: {len(hashed_password)}\n")
+            return await ctx.send("Hashed password is too long (message length limit: 2000 characters).")
 
-    if type not in HASHER_TYPESv2:
-        logger.error(f" Invalid hash function\n")
-        return await ctx.send("Invalid hash function. See the help message for the list of valid hash functions.")
+        embed = discord.Embed(
+            title = f"Bcrypt Hashed Password 🔄",
+            description = f"""◈ **Password**: {password}\n\n◈ **Hashed Password**: ```{hashed_password}``` \n\n""",
+            colour = discord.Colour.from_rgb(135, 206, 235)
+        )
+        embed.set_footer(text="Somehow better than encoding 🕹️")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png")
+
+        logger.info(f" Sent Bcrypt hashed password to {ctx.author.name}\n")
+        await ctx.send(embed=embed)
 
 
-    valid = verify_hash(type, text, hash)
+    # VERIFY HASH
+    @commands.command(group="Hash")
+    async def vhash(self, ctx, type: str, hash: str, *args: str):
+        """Verify if the given password matches the given hash.
+        
+        Args:
+            hash_func (str): The name of the hash function to use ('md5', 'sha256', 'sha3', 'sha512', 'bcrypt', or 'argon2').
+            hash (str): The hash to compare the original text against.
+            args (str): The original text to compare with the given hash.
+        """
+        HASHER_TYPESv2 = HASHER_TYPES + ["bcrypt", "argon2"]
+        
+        text = " ".join(args)
+        logger.info(f" Received request for verifying hash: \nHash Function: {type} - Hash: {hash} - Original Text: {text} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+        await ctx.message.add_reaction("🔑✅")
+        
+        # Pre-Conditions
+        if hash is None:
+            logger.error(f" Invalid hash given")
+            return await ctx.send("Empty or invalid hash.")
+
+        if text is None:
+            logger.error(f" Invalid text given")
+            return await ctx.send("Empty or invalid text.")
+
+        if type not in HASHER_TYPESv2:
+            logger.error(f" Invalid hash function\n")
+            return await ctx.send("Invalid hash function. See the help message for the list of valid hash functions.")
 
 
-    if valid:
-        logger.info(f" Hash {type} matched the given text\n")
-        return await ctx.send(f"Hash {type} matched the given text 🔑✅")
-    else:
-        logger.info(f" Hash {type} did not match the given text\n")
-        return await ctx.send(f"Hash {type} did not match the given text 🔑❌")
+        valid = verify_hash(type, text, hash)
+
+        if valid:
+            logger.info(f" Hash {type} matched the given text\n")
+            return await ctx.send(f"Hash {type} matched the given text 🔑✅")
+        else:
+            logger.info(f" Hash {type} did not match the given text\n")
+            return await ctx.send(f"Hash {type} did not match the given text 🔑❌")
 
 async def setup(bot):
     await bot.add_cog(CoderCommands(bot))

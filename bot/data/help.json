@@ -1,0 +1,43 @@
+{
+    "Common" : {
+        "purge" : "Clear a specified number of messages in the channel (default: 5).",
+        "help" : "Shows this message."
+    },
+
+    "Codify" : {
+        "encode" : "Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).\nUsage: `$encode <format> <text>`",
+
+        "decode" : "Decodes the given text into its corresponding text (`b: binary`, `o: octal`, `d: decimal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`).\nUsage: `$decode <format> <text>`"
+    },
+
+    "Hash" : {
+        "hashing" : "Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).\nUsage: `$hash <algorithm> <text>`",
+
+        "argon2" : "Hashes the given password using Argon2. Note: Don't use whitespaces in the password.\nUsage: `$argon2 <password> <iterations> <memory_cost> <parallelism> <hash_len> <type>`\nDefault values: iterations = `3` (1-20 min-max), memory_cost = `65536` (80-1000000 min-max), parallelism = `4` (1-10 min-max), hash_len = `32` (4-100 min-max), type = `id` (`id`, `i`, `d`)",
+
+        "bcrypt" : "Hashes the given password using Bcrypt. Note: Don't use whitespaces in the password.\nUsage: `$bcrypt <password> <rounds>`\nDefault value: rounds = `12` (1-20 min-max)",
+
+        "vhash" : "Verify if the given password matches the given hash.\nUsage: `$vhash <hash_func> <hash> <original_text>`\nAvailable hash functions: `md5`, `sha256`, `sha3`, `sha512`, `bcrypt`, `argon2`"
+    },
+    
+    "Password" : {
+        "randpasswd" : "Generates a random password, consisting of random ASCII characters.\nUsage: `$randpasswd <length> <capital> <numbers> <symbols>`\nDefault values: length = `20` (8-64 min-max), `True` for capital, numbers, symbols `(c1, n1, s1)`\n Alternatives: `False` for capital, numbers, symbols `(c0, n0, s0)`",
+
+        "mempasswd" : "Generates a random memorable password, consisting of random words and a number, separated by \"-\".\nUsage: `$mempasswd <words>`\nDefault value: words = `5` (4-10 min-max)"
+    },
+
+    "VirusTotal" : {
+        "vt_url": "Check if a URL is malicious using VirusTotal API and return a report if exists. \nUsage: `$vt url <url>`",
+
+        "vt_ip": "Check if an IP is malicious using VirusTotal API and return a report if exists. \n Usage: `$vt_ip <ip>`"
+    },
+
+    "RevShell" : {
+        "revsh" : "Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\nUsage: `$revsh <type> <ip> <port>`\nAvailable types: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`",
+
+        "websh" : "Generate a payload for a web shell depending on the type of shell asked.\n Usage: `$websh <type>`\n Types: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`",
+
+        "tty" : "Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell."
+
+    }
+}

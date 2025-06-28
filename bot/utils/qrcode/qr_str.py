@@ -68,15 +68,3 @@ def generate_qr(data: str, logo_url: Optional[str] = None) -> io.BytesIO:
     img.save(output, format="PNG")
     output.seek(0)
     return output
-
-
-if __name__ == "__main__":
-    url = "https://discord.com"
-    logo_url = "https://pngimg.com/uploads/discord/discord_PNG3.png"
-
-    try:
-        qr_image_bytes = generate_qr(url, logo_url)
-        img = Image.open(qr_image_bytes)
-        img.show()
-    except Exception as e:
-        print(f"Error generating QR code: {e}")

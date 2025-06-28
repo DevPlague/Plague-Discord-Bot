@@ -8,8 +8,6 @@ from typing import Optional
 from qr_str import get_logo
 
 
-
-
 def generate_wifi_qr(ssid: str, security: str, password: str, logo_url: Optional[str] = None) -> io.BytesIO:
     """
     Generates a WiFi QR code image that can be scanned to connect automatically.
