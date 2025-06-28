@@ -59,7 +59,6 @@ async def purge(ctx, amount=5):
 cogs = [
     "cogs.rs_commands",
     "cogs.vt_commands",
-    "cogs.help"
     "cogs.passwd_commands",
     "cogs.cod_commands",
     "cogs.qr_commands"

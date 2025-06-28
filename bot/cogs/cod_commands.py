@@ -14,7 +14,7 @@ class CoderCommands(commands.Cog):
         self.bot = bot
 
 # ENCODER COMMAND
-    @commands.command(group="Codify")
+    @commands.command(help="Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).\nUsage: `!encode <format> <text>`")
     async def encode(self, ctx, format: str, *args: str):
         """Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).
 
@@ -72,7 +72,7 @@ class CoderCommands(commands.Cog):
 
 
 # DECODER COMMAND
-    @commands.command(group="Codify")
+    @commands.command(help="Decodes the given text into its corresponding text (`b`: binary, `o`: octal, `d`: decimal, `x`: hex, `X`: uppercase hex, `b64`: base64, `url`: URL, `rot13`: ROT13).\nUsage: !decode <format> <text>")
     async def decode(self, ctx, format: str, *args: str):
         """Decodes the given text into its corresponding text (`b: binary`, `o: octal`, `d: decimal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`).
         
@@ -141,7 +141,7 @@ class CoderCommands(commands.Cog):
         )
         
         embed.set_footer(text="This job is boring as hell 🧮")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/5/54/latest/20231218183826/Necrosol_EP.png") 
         
         logger.info(f" Sent decoded text to {ctx.author.name}\n")
@@ -154,7 +154,7 @@ class HasherCommands(commands.Cog):
         self.bot = bot
 
 # SIMPLE HASHING
-    @commands.command(group="Hash")
+    @commands.command(help="Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).\nUsage: `!hash <algorithm> <text>`")
     async def hashing(self, ctx, algorithm: str, *args: str):
         """Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).
         
@@ -207,7 +207,7 @@ class HasherCommands(commands.Cog):
         )
         
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png") 
         
         logger.info(f" Sent {algorithm} hashed text to {ctx.author.name}\n")
@@ -215,7 +215,7 @@ class HasherCommands(commands.Cog):
 
 
 # ARGON2
-    @commands.command(group="Hash")
+    @commands.command(help="Hashes the given password using Argon2. Note: Don't use whitespaces in the password.\nUsage: `!argon2 <password> <iterations> <memory_cost> <parallelism> <hash_len> <type>`\nDefault values: iterations = `3` (1-20 min-max), memory_cost = `65536` (80-1000000 min-max), parallelism = `4` (1-10 min-max), hash_len = `32` (4-100 min-max), type = `id` (`id`, `i`, `d`)")
     async def argon2(self, ctx, password: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id"):
         """Hashes the given password using Argon2. (Don't use whitespaces in the password)
         
@@ -255,7 +255,7 @@ class HasherCommands(commands.Cog):
         )
 
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png") 
 
         logger.info(f" Sent Argon2 hashed password to {ctx.author.name}\n")
@@ -263,7 +263,7 @@ class HasherCommands(commands.Cog):
 
 
 # BCRYPT
-    @commands.command(group="Hash") 
+    @commands.command(help="Hashes the given password using Bcrypt. Note: Don't use whitespaces in the password.\nUsage: `!bcrypt <password> <rounds>`\nDefault value: rounds = `12` (1-20 min-max)")
     async def bcrypt(self, ctx, password: str, rounds: int = 12):
         """Hashes the given password using Bcrypt. (Don't use whitespaces in the password)
         
@@ -306,7 +306,7 @@ class HasherCommands(commands.Cog):
 
 
     # VERIFY HASH
-    @commands.command(group="Hash")
+    @commands.command(help="Verify if the given password matches the given hash.\nUsage: `!vhash <hash_func> <hash> <original_text>`\nAvailable hash functions: `md5`, `sha256`, `sha3`, `sha512`, `bcrypt`, `argon2`")
     async def vhash(self, ctx, type: str, hash: str, *args: str):
         """Verify if the given password matches the given hash.
         
@@ -336,6 +336,7 @@ class HasherCommands(commands.Cog):
 
 
         valid = verify_hash(type, text, hash)
+
 
         if valid:
             logger.info(f" Hash {type} matched the given text\n")
