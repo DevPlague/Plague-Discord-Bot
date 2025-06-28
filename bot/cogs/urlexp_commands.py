@@ -30,16 +30,16 @@ class URLExpanderCog(commands.Cog):
             logger.error(f" Error expanding '{short_url}'")
             return await ctx.send("Invalid URL. Verify that the format is correct or that it exists at all.")
 
-        logger.info(f" Expanded URL obtained: {expanded_url} \nUser: {ctx.author.name}\n")
+        logger.info(f" Expanded URL obtained: {expanded_url}\nUser: {ctx.author.name}\n")
 
         embed = discord.Embed(
-            title = f"URL Xpander ↕️",
-            description = f"""{expanded_url}\n""",
-            colour = discord.Colour.from_rgb(106, 71, 249)      # Cambiar color
+            title = f"URL Xpander ↔️",
+            description = f"""Short URL: {short_url}\n**Expanded URL**: {expanded_url}\n""",
+            colour = discord.Colour.from_rgb(205, 36, 151)
         )
-        embed.set_footer(text="Top Secret (Destroy this message after reading) 💼") # Cambiar
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") # Cambiar
-        embed.set_author(name="Vault Keeper 🗝️", icon_url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") # Cambiar
+        embed.set_footer(text="URL Big Bang Theory 💥")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/spiritomb.gif")
+        embed.set_author(name="The Omniscient 🔮", icon_url="https://wiki.p-insurgence.com/images/b/bf/442.png")
 
         logger.info(f" Sent expanded URL to {ctx.author.name}\n")
         await ctx.send(embed=embed)
