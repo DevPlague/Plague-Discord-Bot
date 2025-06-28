@@ -61,7 +61,9 @@ cogs = [
     "cogs.vt_commands",
     "cogs.passwd_commands",
     "cogs.cod_commands",
-    "cogs.qr_commands"
+    "cogs.qr_commands",
+    "cogs.urlexp_commands",
+    "cogs.cli_utilities_commands"
 ]
 
 async def load_cogs(bot):

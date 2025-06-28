@@ -155,11 +155,11 @@ class HasherCommands(commands.Cog):
 
 # SIMPLE HASHING
     @commands.command(help="Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).\nUsage: `!hash <algorithm> <text>`")
-    async def hashing(self, ctx, algorithm: str, *args: str):
+    async def hash(self, ctx, algorithm: str, *args: str):
         """Hashes the given text using the specified algorithm (`md5`, `sha256`, `sha3`, `sha512`).
         
         Args:
-            algorithm (str): Hashing algorithm. Available algorithms: Algorithm applied to the given text.
+            algorithm (str): Hashing algorithm applied to the given text.
             *args (str): The text to be hashed.
         """
         text = " ".join(args)
