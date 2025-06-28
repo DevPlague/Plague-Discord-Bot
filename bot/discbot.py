@@ -23,7 +23,7 @@ intents.messages = True
 intents.message_content = True
 intents.guilds = True
 
-bot = commands.Bot(command_prefix="$",
+bot = commands.Bot(command_prefix="!",
                    intents=intents,
                    case_insensitive=True,
                    max_messages=100,
@@ -60,9 +60,9 @@ cogs = [
     "cogs.rs_commands",
     "cogs.vt_commands",
     "cogs.passwd_commands",
-    "cogs.cod_commands"
+    "cogs.cod_commands",
+    "cogs.qr_commands"
 ]
-
 
 async def load_cogs(bot):
     for cog in cogs:
@@ -72,7 +72,6 @@ async def main():
     async with bot:
         await load_cogs(bot)
         await bot.start(str(DISCORD_TOKEN))
-
 
 if __name__ == "__main__":
     asyncio.run(main())

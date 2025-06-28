@@ -5,10 +5,10 @@ from urllib.parse import quote
 from qrcode.constants import ERROR_CORRECT_H
 from PIL import Image
 from typing import Optional
-from qr_str import get_logo
+from utils.qrcode.qr_str import get_logo
 
 
-def generate_wifi_qr(ssid: str, security: str, password: str, logo_url: Optional[str] = None) -> io.BytesIO:
+def generate_wifi_qr(ssid: str, security: str, password: Optional[str], logo_url: Optional[str] = None) -> io.BytesIO:
     """
     Generates a WiFi QR code image that can be scanned to connect automatically.
 
@@ -35,7 +35,8 @@ def generate_wifi_qr(ssid: str, security: str, password: str, logo_url: Optional
     if security == 'nopass':
         wifi_data = 'WIFI:S:{};T:{};;'.format(quote(ssid), security)
     else:
-        wifi_data = 'WIFI:S:{};T:{};P:{};;'.format(quote(ssid), security, quote(password))
+        if isinstance(password, str):
+            wifi_data = 'WIFI:S:{};T:{};P:{};;'.format(quote(ssid), security, quote(password))
 
 
     qr = qrcode.QRCode(
