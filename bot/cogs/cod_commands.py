@@ -64,7 +64,7 @@ class CoderCommands(commands.Cog):
         )
         
         embed.set_footer(text="This job is boring as hell 🧮")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/6/64/latest/20231218184557/Necroluna_EP.png") 
         
         logger.info(f" Sent decoded text to {ctx.author.name}\n")
@@ -298,7 +298,7 @@ class HasherCommands(commands.Cog):
             colour = discord.Colour.from_rgb(135, 206, 235)
         )
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png")
 
         logger.info(f" Sent Bcrypt hashed password to {ctx.author.name}\n")

@@ -53,7 +53,7 @@ class PasswordCog(commands.Cog):
             colour = discord.Colour.from_rgb(106, 71, 249)
         )
         embed.set_footer(text="Top Secret (Destroy this message after reading) 💼")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/honchkrow.gif")
         embed.set_author(name="Vault Keeper 🗝️", icon_url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") 
 
         try:
@@ -97,7 +97,7 @@ class PasswordCog(commands.Cog):
             colour = discord.Colour.from_rgb(106, 71, 249)
         )
         embed.set_footer(text="Top Secret (Destroy this message after reading) 💼")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/giovanni-lgpe.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/honchkrow.gif")
         embed.set_author(name="Vault Keeper 🗝️", icon_url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") 
 
         try:

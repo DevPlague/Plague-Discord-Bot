@@ -55,7 +55,7 @@ class QRCog(commands.Cog):
             colour = discord.Colour.from_rgb(255, 255, 255)
         )
         embed.set_footer(text="Real ones keep it square, no cap 📐")
-        embed.set_thumbnail(url="https://static.wikia.nocookie.net/pokemon-radiance/images/e/e0/359_Stakataka.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/medicham-mega.gif")
         embed.set_author(name="The Bronx 📦", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/a/ab/latest/20230122133600/Periscopio_EP.png")
 
         embed.set_image(url="attachment://qr.png")
@@ -154,7 +154,7 @@ class QRCog(commands.Cog):
             colour = discord.Colour.from_rgb(255, 255, 255)
         )
         embed.set_footer(text="Real ones keep it square, no cap 📐")
-        embed.set_thumbnail(url="https://static.wikia.nocookie.net/pokemon-radiance/images/e/e0/359_Stakataka.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/medicham-mega.gif")
         embed.set_author(name="The Bronx 📦", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/a/ab/latest/20230122133600/Periscopio_EP.png")
 
         embed.set_image(url="attachment://qr.png")

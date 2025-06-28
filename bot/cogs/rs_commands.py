@@ -72,7 +72,7 @@ class ReverseShellCog(commands.Cog):
             colour = discord.Colour.dark_red()
         )
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/zoroark-hisui.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
         logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
@@ -122,7 +122,7 @@ class ReverseShellCog(commands.Cog):
             colour = discord.Colour.dark_red()
             )
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/zoroark.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
         logger.info(f" Sent {type} web shell to {ctx.author.name}\n")
@@ -149,7 +149,7 @@ class ReverseShellCog(commands.Cog):
         
         embed.add_field(name="4. Adjust rows and columns of the Reverse Shell to match your terminal's dimensions ", value="◈ In your **CLI**: ```bash\nstty size```\n◈ In **Reverse Shell**: ```bash\nstty rows <num> columns <num>```", inline=True)
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/blaine-lgpe.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/meltan.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
         logger.info(f" Sent TTY cheatsheet to {ctx.author.name}\n")
