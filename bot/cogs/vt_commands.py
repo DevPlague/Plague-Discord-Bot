@@ -38,12 +38,12 @@ class VirusTotalCog(commands.Cog):
             if result["malicious"] > 0 or result["suspicious"] > 2:
                 color = discord.Colour.red()
                 title = f"ALERT: <{url}> wants to ruin your day! 💢"
-                image = "https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185508/Repelente_m%C3%A1ximo_EP.png"
+                image = "https://play.pokemonshowdown.com/sprites/gen5ani/rotom-heat.gif"
 
             else:
                 color = discord.Colour.green()
                 title = f"<{url}> is safe! But stay sharp! 👀"
-                image = "https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185416/Repelente_EP.png?20231030185416"
+                image = "https://play.pokemonshowdown.com/sprites/gen5ani/rotom-mow.gif"
 
             embed = discord.Embed(
                 title=title,
@@ -68,14 +68,14 @@ class VirusTotalCog(commands.Cog):
                 colour=discord.Colour.orange()
             )
             embed.set_footer(text="Powered by VirusTotal")
-            embed.set_thumbnail(url="https://static.wikia.nocookie.net/robloxpokemonbrickbronze/images/d/d8/Metal_Coat_DW.png/revision/latest?cb=20161009161420")
+            embed.set_thumbnail(url="https://static.wikia.nocookie.net/robloxpokemonbrickbronze/images/d/d8/Metal_Coat_DW.png")
             embed.set_author(name="URL Check", url=f"https://www.virustotal.com/gui/url/{sha256(url.encode()).hexdigest()}", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185416/Repelente_EP.png?20231030185416")
 
         await ctx.send(embed=embed)
 
 
 
-    @commands.command(help="Check if an IP is malicious using VirusTotal API and return a report if exists. \n Usage: `!vt_ip <ip>`")
+    @commands.command(group="VirusTotal")
     async def vt_ip(self, ctx, ip: str):
         """Check if an IP is malicious using VirusTotal API and return a report if exists.
 
@@ -96,12 +96,12 @@ class VirusTotalCog(commands.Cog):
             if result["malicious"] > 0 or result["suspicious"] > 2:
                 color = discord.Colour.red()
                 title = f"ALERT: {ip} wants to ruin your day! 💢"
-                image = "https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185508/Repelente_m%C3%A1ximo_EP.png"
+                image = "https://play.pokemonshowdown.com/sprites/gen5ani/rotom-heat.gif"
 
             else:
                 color = discord.Colour.green()
                 title = f"{ip} is safe! But stay sharp! 👀"
-                image = "https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185416/Repelente_EP.png?20231030185416"
+                image = "https://play.pokemonshowdown.com/sprites/gen5ani/rotom-mow.gif"
 
             embed = discord.Embed(
                 title=title,

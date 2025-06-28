@@ -13,7 +13,7 @@ class PasswordCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Generates a random password, consisting of random ASCII characters.\nUsage: `!randpasswd <length> <capital> <numbers> <symbols>`\nDefault values: length = `20` (8-64 min-max), `True` for capital, numbers, symbols `(c1, n1, s1)`\n Alternatives: `False` for capital, numbers, symbols `(c0, n0, s0)`")
+    @commands.command(group="Password")
     async def randpasswd(self, ctx, length: int = 20, capital: str = "c1", numbers: str = "n1", symbols: str = "s1"):
         """Generates a random password, consisting of a string of random ASCII characters.
 
@@ -53,7 +53,7 @@ class PasswordCog(commands.Cog):
             colour = discord.Colour.from_rgb(106, 71, 249)
         )
         embed.set_footer(text="Top Secret (Destroy this message after reading) 💼")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/honchkrow.gif")
         embed.set_author(name="Vault Keeper 🗝️", icon_url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") 
 
         try:
@@ -63,7 +63,7 @@ class PasswordCog(commands.Cog):
             logger.error(f" Failed to send message to {ctx.author.name}\n")
             return await ctx.send("Failed to send message. Check your privacy settings ⚠️")
 
-    @commands.command(help="Generates a random memorable password, consisting of random words and a number, separated by \"-\".\nUsage: `!mempasswd <words>`\nDefault value: words = `5` (4-10 min-max)")
+    @commands.command(group="Password")
     async def mempasswd(self, ctx, words: int = 5):
         """Generates a random memorable password, consisting of random words and a number, separated by "-".
         
@@ -97,7 +97,7 @@ class PasswordCog(commands.Cog):
             colour = discord.Colour.from_rgb(106, 71, 249)
         )
         embed.set_footer(text="Top Secret (Destroy this message after reading) 💼")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/giovanni-lgpe.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/honchkrow.gif")
         embed.set_author(name="Vault Keeper 🗝️", icon_url="https://play.pokemonshowdown.com/sprites/trainers/giovanni.png") 
 
         try:

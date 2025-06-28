@@ -64,7 +64,7 @@ class CoderCommands(commands.Cog):
         )
         
         embed.set_footer(text="This job is boring as hell 🧮")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/6/64/latest/20231218184557/Necroluna_EP.png") 
         
         logger.info(f" Sent decoded text to {ctx.author.name}\n")
@@ -141,7 +141,7 @@ class CoderCommands(commands.Cog):
         )
         
         embed.set_footer(text="This job is boring as hell 🧮")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/5/54/latest/20231218183826/Necrosol_EP.png") 
         
         logger.info(f" Sent decoded text to {ctx.author.name}\n")
@@ -207,7 +207,7 @@ class HasherCommands(commands.Cog):
         )
         
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png") 
         
         logger.info(f" Sent {algorithm} hashed text to {ctx.author.name}\n")
@@ -255,7 +255,7 @@ class HasherCommands(commands.Cog):
         )
 
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png") 
 
         logger.info(f" Sent Argon2 hashed password to {ctx.author.name}\n")
@@ -298,7 +298,7 @@ class HasherCommands(commands.Cog):
             colour = discord.Colour.from_rgb(135, 206, 235)
         )
         embed.set_footer(text="Somehow better than encoding 🕹️")
-        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/trainers/clemont.png")
+        embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/porygonz.gif")
         embed.set_author(name="0xCipher 🧩", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/8/8b/latest/20221213211136/Dado_trucado_EP.png")
 
         logger.info(f" Sent Bcrypt hashed password to {ctx.author.name}\n")
@@ -307,13 +307,13 @@ class HasherCommands(commands.Cog):
 
     # VERIFY HASH
     @commands.command(help="Verify if the given password matches the given hash.\nUsage: `!vhash <hash_func> <hash> <original_text>`\nAvailable hash functions: `md5`, `sha256`, `sha3`, `sha512`, `bcrypt`, `argon2`")
-    async def vhash(self, ctx, type, hash: str, *args: str):
+    async def vhash(self, ctx, type: str, hash: str, *args: str):
         """Verify if the given password matches the given hash.
         
         Args:
             hash_func (str): The name of the hash function to use ('md5', 'sha256', 'sha3', 'sha512', 'bcrypt', or 'argon2').
             hash (str): The hash to compare the original text against.
-            original_text (str): The original text to compare with the given hash.
+            args (str): The original text to compare with the given hash.
         """
         HASHER_TYPESv2 = HASHER_TYPES + ["bcrypt", "argon2"]
         
