@@ -1,16 +1,17 @@
 import asyncio
 import logging
-import os
-
 import discord
+import os
+import urllib.request
+
 from discord.ext import commands
 from discord import Intents
 from dotenv import load_dotenv
+from pretty_help import AppMenu, PrettyHelp, AppNav
 
 load_dotenv()
-DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-
 logging.basicConfig(level=logging.INFO)
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 logger = logging.getLogger("Discord-Bot")
 
 if DISCORD_TOKEN is None:
@@ -44,26 +45,26 @@ async def on_ready():
     logger.info(f" Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
     await bot.change_presence(activity=discord.Game(name="🐛🔥 Repelling bugs!"))
 
-@bot.command(group="Common")
-async def purge(ctx, amount=5):
-    """Clear messages in a channel (default: 5)."""
-    if not ctx.author.guild_permissions.manage_messages:
-        return 
 
-    if not ctx.channel.permissions_for(ctx.guild.me).manage_messages:
-        return
+# Help Menu
+ending_note = "To list available commands from group, type {help.clean_prefix}{help.invoked_with} <group>. For command example of usage, type {help.clean_prefix}{help.invoked_with} <command>."
+menu = AppMenu(timeout=30)
+bot.help_command = PrettyHelp(menu=menu, ending_note=ending_note,
+                            show_index=True,
+                            no_category="General",
+                            thumbnail_url="https://play.pokemonshowdown.com/sprites/gen5ani/dugtrio-alola.gif",
+                            index_title="Commands' Groups",
+                            color=discord.Colour.from_rgb(21, 214, 18))
 
-    logger.info(f" Purging {amount} messages in {ctx.channel.name} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-    await ctx.channel.purge(limit=amount)
 
 cogs = [
     "cogs.rs_commands",
     "cogs.vt_commands",
     "cogs.passwd_commands",
     "cogs.cod_commands",
+    "cogs.general_commands",
     "cogs.qr_commands",
-    "cogs.urlexp_commands",
-    "cogs.cli_utilities_commands"
+    "cogs.cli_commands",
 ]
 
 async def load_cogs(bot):
@@ -72,6 +73,7 @@ async def load_cogs(bot):
 
 async def main():
     async with bot:
+        bot.add_view(AppNav())
         await load_cogs(bot)
         await bot.start(str(DISCORD_TOKEN))
 

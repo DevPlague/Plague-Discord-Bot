@@ -1,25 +1,19 @@
-from discord.ext import commands
-import discord
 import logging
 import ipaddress
+import discord
+from discord.ext import commands
 
-logger = logging.getLogger("RS-Commands")
+logger = logging.getLogger("SHELL")
 RS_TYPES = ["bash-i", "bash196", "readline", "mkfifo", "py1", "py2", "nc-e", "nc-c", "lua"]
 WEBSH_TYPES = ["php0", "php-cmd", "php-obf", "asp", "jsp"]
 
-class ReverseShellCog(commands.Cog):
+class Shell(commands.Cog):
+    """Generate a payload for reverse shells, web shells and give a cheatsheet to establish a full interactive TTY session."""
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(group="RevShell")
+    @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\nPossible payloads: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`.")
     async def revsh(self, ctx, type: str, ip: str, port: int):
-        """Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.
-        
-        Args:
-            type (str): Type of reverse shell to generate. Possible values: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`.
-            ip (str): IP address of the target machine.
-            port (int): Port number of the target machine.
-        """
         logger.info(f" Received request for reverse shell: {type}, {ip}, {port} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
 
@@ -75,20 +69,16 @@ class ReverseShellCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/zoroark-hisui.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
+
         logger.info(f" Sent {type} reverse shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
-    @commands.command(group="RevShell")
+
+    @commands.command(help="Generate a payload for a web shell depending on the type of shell asked.\nPossible payloads: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`.")
     async def websh(self, ctx, type: str):
-        """Generate a payload for a web shell depending on the type of shell asked.
-        
-        Args:
-            type (str): Type of web shell to generate. Possible values: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`.
-        """
         logger.info(f" Received request for web shell: {type} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
-        
-        
+
         # Pre-Conditions
         if type.lower() not in WEBSH_TYPES:
             logger.error(f" Invalid type: {type}\n")
@@ -125,16 +115,15 @@ class ReverseShellCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/zoroark.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
+
         logger.info(f" Sent {type} web shell to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
 
-    @commands.command(group="RevShell")
+    @commands.command(help="Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.")
     async def tty(self, ctx):
-        """Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell."""
         logger.info(f" TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
-
 
         embed = discord.Embed(
                 title="TTY Cheatsheet 🖥️",
@@ -152,12 +141,11 @@ class ReverseShellCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/meltan.gif")
         embed.set_author(name="Mr. Revshells", icon_url="https://play.pokemonshowdown.com/sprites/trainers/blaine.png")
 
+
         logger.info(f" Sent TTY cheatsheet to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
 
 
-
-
 async def setup(bot):
-    await bot.add_cog(ReverseShellCog(bot))
+    await bot.add_cog(Shell(bot))

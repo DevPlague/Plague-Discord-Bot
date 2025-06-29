@@ -1,21 +1,30 @@
-import discord
-from discord.ext import commands
 import logging
 import urllib.request
+import discord
+from discord.ext import commands
 
-logger = logging.getLogger("URL-Expander")
 
-class URLExpanderCog(commands.Cog):
+logger = logging.getLogger("GENERAL")
+
+class General(commands.Cog):
+    """Commands that don't fit in any other category, like clean up channels, expand URLs, etc..."""
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Expands a shortened URL to show its final destination. \nUsage: `!xpand <url>`")
-    async def xpand(self, ctx, short_url: str):
-        """Expands a shortened URL to show its final destination.
+    @commands.command(help="Clears messages in a channel. Default: 10 messages.")
+    async def purge(self, ctx, amount : int = 10):
+        if not ctx.author.guild_permissions.manage_messages:
+            return 
 
-        Args:
-            short_url (str): The shortened URL to expand.
-        """
+        if not ctx.channel.permissions_for(ctx.guild.me).manage_messages:
+            return
+
+        logger.info(f" Purging {amount} messages in {ctx.channel.name} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
+        await ctx.channel.purge(limit=amount)
+
+
+    @commands.command(help="Expands a shortened URL to show its final destination.")
+    async def xpand(self, ctx, short_url: str):
         logger.info(f" Received short URL to expand: {short_url} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("🌐")
 
@@ -32,6 +41,7 @@ class URLExpanderCog(commands.Cog):
 
         logger.info(f" Expanded URL obtained: {expanded_url}\nUser: {ctx.author.name}\n")
 
+
         embed = discord.Embed(
             title = f"URL Xpander ↔️",
             description = f"""Short URL: {short_url}\n**Expanded URL**: {expanded_url}\n""",
@@ -41,8 +51,9 @@ class URLExpanderCog(commands.Cog):
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/spiritomb.gif")
         embed.set_author(name="The Omniscient 🔮", icon_url="https://wiki.p-insurgence.com/images/b/bf/442.png")
 
+
         logger.info(f" Sent expanded URL to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
 async def setup(bot):
-    await bot.add_cog(URLExpanderCog(bot))
+    await bot.add_cog(General(bot))
