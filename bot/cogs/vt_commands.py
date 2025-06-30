@@ -17,7 +17,7 @@ class VT(commands.Cog):
         self.bot = bot
         self.apiHandler = VTApiHandler(logger, str(VT_API_KEY))
 
-    @commands.command(help="Checks if a URL is malicious using VirusTotal API and return a report if exists.")
+    @commands.command(help="Checks if a URL is malicious using VirusTotal API and returns a report if exists.")
     async def vt_url(self, ctx, url: str):
         logger.info(f" Report asked for URL: {url} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("🔍")
@@ -70,7 +70,7 @@ class VT(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Check if an IP is malicious using VirusTotal API and return a report if exists.")
+    @commands.command(help="Check if an IP is malicious using VirusTotal API and returns a report if exists.")
     async def vt_ip(self, ctx, ip: str):
         logger.info(f" Report asked for IP: {ip} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("🔍")

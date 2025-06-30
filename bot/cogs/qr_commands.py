@@ -55,7 +55,7 @@ class QR(commands.Cog):
         await ctx.send(embed=embed, file=file)
 
 
-    @commands.command(help="Generates a WiFi QR code image that can be scanned to connect automatically. You can specify an unprotected network in security arg by passing \"nopass\" and skip the password arg. Command only available in DMs.")
+    @commands.command(help="Generates a WiFi QR code image that can be scanned to connect automatically. You can specify an unprotected network in security arg by passing \"nopass\" and skip the password arg. Command is only available in DMs.")
     async def wifiQR(self, ctx, *args):
         if not isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send("Command only available in DMs.")

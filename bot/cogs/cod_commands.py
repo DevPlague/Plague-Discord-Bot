@@ -13,7 +13,7 @@ class Encoder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Encodes the given text into a given format (`b: binary`, `o: octal`, `x: hex`, `X: uppercase hex`, `b64: base64`, `url: URL`, `rot13: ROT13`).")
+    @commands.command(help="Encodes the given text into a given format. Possible formats: \n - `b: binary` \n - `o: octal` \n - `x: hex` \n - `X: uppercase hex` \n - `b64: base64` \n - `url: URL` \n - `rot13: ROT13`.")
     async def encode(self, ctx, format: str, *args: str):
         text = " ".join(args)
         logger.info(f" Received request for encoding: {format}, {text} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
@@ -64,7 +64,7 @@ class Encoder(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Decodes the given text into its corresponding text (`b`: binary, `o`: octal, `d`: decimal, `x`: hex, `X`: uppercase hex, `b64`: base64, `url`: URL, `rot13`: ROT13).")
+    @commands.command(help="Decodes the given text into its corresponding text. Possible formats: \n - `b: binary` \n - `o: octal` \n - `d: decimal` \n - `x: hex` \n - `X: uppercase hex` \n - `b64: base64` \n - `url: URL` \n - `rot13: ROT13`.")
     async def decode(self, ctx, format: str, *args: str):
         text = " ".join(args)
         logger.info(f" Received request for decoding: {format}, {text} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
@@ -192,7 +192,7 @@ class Hasher(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Hashes using Argon2. Only available in DMs and don't use whitespaces in the password.\nPossible values: iterations (1-20 min-max), memory_cost (80-1000000 min-max), parallelism (1-10 min-max), hash_len (4-100 min-max), type (`id`, `i`, `d`)")
+    @commands.command(help="Hashes given password using Argon2. Only available in DMs. Don't use whitespaces in the password.\nPossible values for: \n - iterations (1-20) \n - memory_cost (80-1000000) \n - parallelism (1-10) \n - hash_len (4-100) \n - type (`id`, `i`, `d`)")
     async def argon2(self, ctx, password: str, iterations: int = 3, memory_cost: int = 65536, parallelism: int = 4, hash_len: int = 32, type: str = "id"):
         if not isinstance(ctx.channel, discord.DMChannel):
             logger.warning(f" Invoked Argon2 hashing in a non-DM channel\n")
@@ -228,7 +228,7 @@ class Hasher(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Hashes the given password using Bcrypt. Only available in DMs and don't use whitespaces in the password. Possible value: rounds(1-20 min-max)")
+    @commands.command(help="Hashes the given password using Bcrypt. Only available in DMs. Don't use whitespaces in the password. Possible value for: \n - rounds(1-20)")
     async def bcrypt(self, ctx, password: str, rounds: int = 12):
         logger.info(f" Received request for Bcrypt hashing (Rounds: {rounds})\nUser: {ctx.author.name}")
         await ctx.message.add_reaction("🔄")

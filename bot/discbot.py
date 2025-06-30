@@ -2,7 +2,6 @@ import asyncio
 import logging
 import discord
 import os
-import urllib.request
 
 from discord.ext import commands
 from discord import Intents
@@ -48,7 +47,7 @@ async def on_ready():
 
 # Help Menu
 ending_note = "To list available commands from group, type {help.clean_prefix}{help.invoked_with} <group>. For command example of usage, type {help.clean_prefix}{help.invoked_with} <command>."
-menu = AppMenu(timeout=30)
+menu = AppMenu(timeout=120)
 bot.help_command = PrettyHelp(menu=menu, ending_note=ending_note,
                             show_index=True,
                             no_category="General",

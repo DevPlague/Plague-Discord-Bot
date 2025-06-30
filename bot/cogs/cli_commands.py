@@ -14,7 +14,7 @@ REQUESTS = re.compile(r"\[~\] Number of requests: \d+")
 
 
 class CLI(commands.Cog):
-    """CLI commands. The tools that the bot uses must be installed on the system employed by it. We strongly recommend to use the Dockerfile to build and deploy a container rather than installing the tools in local."""
+    """CLI commands. Tools that the bot uses must be installed on the system employed by it. We strongly recommend using the Dockerfile to build and deploy a container rather than installing the tools in local."""
     def __init__(self, bot):
         self.bot = bot
 

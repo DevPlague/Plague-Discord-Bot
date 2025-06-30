@@ -8,11 +8,11 @@ RS_TYPES = ["bash-i", "bash196", "readline", "mkfifo", "py1", "py2", "nc-e", "nc
 WEBSH_TYPES = ["php0", "php-cmd", "php-obf", "asp", "jsp"]
 
 class Shell(commands.Cog):
-    """Generate a payload for reverse shells, web shells and give a cheatsheet to establish a full interactive TTY session."""
+    """They generate a payload for reverse shells, web shells and give a cheatsheet to establish a full interactive TTY session."""
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="Generate a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\nPossible payloads: `bash-i`, `bash196`, `readline`, `mkfifo`, `py1`, `py2`, `nc-e`, `nc-c`, `lua`.")
+    @commands.command(help="Generates a payload for a reverse shell depending on the type of shell asked, using the specified IP and port.\nPossible payloads: \n - `bash-i` \n - `bash196` \n - `readline` \n - `mkfifo` \n - `py1` \n - `py2` \n - `nc-e` \n - `nc-c` \n - `lua`")
     async def revsh(self, ctx, type: str, ip: str, port: int):
         logger.info(f" Received request for reverse shell: {type}, {ip}, {port} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
@@ -74,7 +74,7 @@ class Shell(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Generate a payload for a web shell depending on the type of shell asked.\nPossible payloads: `php0`, `php-cmd`, `php-obf`, `asp`, `jsp`.")
+    @commands.command(help="Generates a payload for a web shell depending on the type of shell asked.\nPossible payloads: \n - `php0` \n - `php-cmd` \n - `php-obf` \n - `asp` \n - `jsp`")
     async def websh(self, ctx, type: str):
         logger.info(f" Received request for web shell: {type} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
@@ -120,7 +120,7 @@ class Shell(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(help="Give a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.")
+    @commands.command(help="Gives a cheatsheet to establish a full interactive TTY session after achieving a reverse shell.")
     async def tty(self, ctx):
         logger.info(f" TTY requested\nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
         await ctx.message.add_reaction("💀")
