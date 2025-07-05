@@ -1,7 +1,11 @@
 import dns.resolver
 import dns.rdatatype
+import dns.reversename
 import dns.exception
+
 from collections import defaultdict
+from typing import Optional
+
 
 RECORDS = [
     dns.rdatatype.A,
@@ -22,7 +26,7 @@ def lookup(domain: str) -> dict[str, list[str]]:
         domain (str): The domain to query.
         
     Returns:
-        dict[str, list[str]: A dictionary with record types as keys and lists of records as values.
+        Dictionary with record types as keys and lists of records as values.
     """
     rs = dns.resolver.Resolver()
     rs.timeout = 5
@@ -52,3 +56,42 @@ def lookup(domain: str) -> dict[str, list[str]]:
             continue
 
     return dict(results)
+
+
+def reverse_lookup(ip: str) -> Optional[list[dict[str, list[str]]]]:
+    """Perform a reverse DNS lookup for a given IP address.
+
+    Args:
+        ip (str): The IP address to reverse lookup.
+
+    Returns:
+        Dictionary with record types as keys and lists of records as values.
+    """
+    rs = dns.resolver.Resolver()
+    rs.timeout = 5
+    ptr = defaultdict(list)
+    results = []
+    
+    try:
+        reversed = dns.reversename.from_address(ip)
+        answers = rs.resolve(reversed, 'PTR', raise_on_no_answer=False)
+        for response in answers:
+            ptr["PTR"].append(response.to_text().rstrip('.'))
+
+        for domain in ptr["PTR"]:
+            results.append(lookup(domain))
+
+        return results
+
+    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN,
+            dns.resolver.NoNameservers, dns.resolver.Timeout):
+        pass
+
+    except dns.exception.DNSException as e:
+        print(f"Error performing reverse lookup for {ip}: {e}")
+
+
+if __name__ == "__main__":
+    ip = "126.4.32.7"
+    result = reverse_lookup(ip)
+    print(result)
