@@ -1,5 +1,5 @@
 [project]
-name = "raid-discord"
+name = "Plague-discord"
 version = "0.1.0"
 description = "Discord Bot that analyzes URLs and IPs sent in a text channel via VirusTotal API to alert users about potential threats."
 

@@ -1,6 +1,3 @@
-# Poetry
-poetry.lock
-
 # Environment vars
 .env
 
