@@ -13,7 +13,8 @@ dependencies = [
     "qrcode (>=8.2,<9.0)",
     "pillow (>=11.2.1,<12.0.0)",
     "requests (>=2.32.3,<3.0.0)",
-    "discord-pretty-help (>=2.0.7,<3.0.0)"
+    "discord-pretty-help (>=2.0.7,<3.0.0)",
+    "dnspython (>=2.7.0,<3.0.0)"
 ]
 
 [tool.poetry]

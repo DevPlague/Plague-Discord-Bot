@@ -57,13 +57,14 @@ bot.help_command = PrettyHelp(menu=menu, ending_note=ending_note,
 
 
 cogs = [
-    "cogs.rs_commands",
-    "cogs.vt_commands",
-    "cogs.passwd_commands",
-    "cogs.cod_commands",
     "cogs.general_commands",
+    "cogs.vt_commands",
+    "cogs.rs_commands",
+    "cogs.cod_commands",
+    "cogs.passwd_commands",
     "cogs.qr_commands",
     "cogs.cli_commands",
+    "cogs.dns_commands"
 ]
 
 async def load_cogs(bot):

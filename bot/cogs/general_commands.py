@@ -49,7 +49,7 @@ class General(commands.Cog):
         )
         embed.set_footer(text="URL Big Bang Theory 💥")
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/spiritomb.gif")
-        embed.set_author(name="The Omniscient 🔮", icon_url="https://wiki.p-insurgence.com/images/b/bf/442.png")
+        embed.set_author(name="The Omniscient 🔮", icon_url="https://play.pokemonshowdown.com/sprites/trainers/brycenman.png")
 
 
         logger.info(f" Sent expanded URL to {ctx.author.name}\n")

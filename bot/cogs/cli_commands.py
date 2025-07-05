@@ -59,7 +59,7 @@ class CLI(commands.Cog):
         )
         embed.set_footer(text="Set Fire to the Rain 🔥🌧️")
         embed.set_thumbnail(url="https://play.pokemonshowdown.com/sprites/gen5ani/houndoom.gif")
-        embed.set_author(name="El Can Severo 🐶", icon_url="https://art.pixilart.com/d979e6a5010c076.png")
+        embed.set_author(name="El Can Severo 🐶", icon_url="https://play.pokemonshowdown.com/sprites/trainers/ariana.png")
         logger.info(f" Sent wafw00f check to {ctx.author.name}\n")
         await ctx.send(embed=embed)
 
