@@ -22,13 +22,15 @@ class Shell(commands.Cog):
             logger.error(f" Invalid port number for reverse shell: {port}\n")
             return await ctx.send("Invalid port number. (Range 1-65535)")
 
-        if not ipaddress.IPv4Address(ip):
+        try:
+            ipaddress.IPv4Address(ip)
+        except ipaddress.AddressValueError:
             logger.error(f" Invalid IP address: {ip}\n")
-            return await ctx.send("Invalid IP address format.")
-
+            return await ctx.send("Invalid IP address. Please provide a valid IPv4 address.")
+        
         if type.lower() not in RS_TYPES:
                 logger.error(f" Invalid type: {type}\n")
-                return await ctx.send("Invalid type. See the help message for the list of valid types.")
+                return await ctx.send("Invalid type. Type `!help revsh` to see the list of valid types.")
 
 
         match type.lower():
@@ -62,7 +64,7 @@ class Shell(commands.Cog):
 
         embed = discord.Embed(
             title = f"Reverse Shell Generator 💀",
-            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ These shell payloads are for **Linux** only. If they are not working, try **UDP** instead of **TCP**. If you are using _code langs_ options, try to use different binary versions if doesn't work.""",
+            description = f"""◈ **Type**: {type}\n\n◈ **IP**: {ip}\n\n◈ **Port**: {port}\n\n {payload} \n❗ These shell payloads are for **Linux** only (ps1 excluded because of AV signatures). Try to use different versions for interpreter/compiler if doesn't work.""",
             colour = discord.Colour.dark_red()
         )
         embed.set_footer(text="Shhhh, I'm a secret agent! 🕵️‍♂️")
@@ -82,7 +84,7 @@ class Shell(commands.Cog):
         # Pre-Conditions
         if type.lower() not in WEBSH_TYPES:
             logger.error(f" Invalid type: {type}\n")
-            return await ctx.send("Invalid type. See the help message for the list of valid types.")
+            return await ctx.send("Invalid type. Invalid type. Type `!help websh` to see the list of valid types.")
 
 
         match type.lower():

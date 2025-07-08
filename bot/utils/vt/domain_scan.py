@@ -1,6 +1,6 @@
-from urllib.parse import urlparse
-import base64 as b64
 import aiohttp
+import base64 as b64
+from urllib.parse import urlparse
 
 async def valid_url(url: str) -> bool:
     """Check if the URL is valid and exists."""
@@ -13,7 +13,10 @@ async def valid_url(url: str) -> bool:
 
         async with aiohttp.ClientSession() as session:
             async with session.head(url, allow_redirects=True, headers=headers) as response:
-                return 200 <= response.status < 400
+                check1 = 200 <= response.status < 400
+            async with session.get(url, allow_redirects=True, headers=headers) as response:
+                check2 = 200 <= response.status < 400
+        return check1 or check2
 
     except aiohttp.ClientError as e:
         return False
@@ -53,4 +56,3 @@ async def url_report(url: str, api_key: str):
         return f"Error in the request: {e}"
     except Exception as e:
         return f"Unexpected error: {e}"
-

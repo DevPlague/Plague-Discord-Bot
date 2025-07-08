@@ -108,7 +108,7 @@ class QR(commands.Cog):
 
         except ValueError as e:
             logger.error(f"QR generation failed: {e}")
-            return await ctx.send(f"Couldn't load the given logo. Make sure that the URL points to a valid image format. Content-Type must starts with 'image/'.")
+            return await ctx.send(f"Couldn't load the given logo. Make sure that the URL points to a valid image format. Content-Type must start with 'image/'.")
 
         except Exception as e:
             logger.error(f"Unexpected error during QR generation: {e}")

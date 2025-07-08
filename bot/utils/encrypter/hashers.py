@@ -18,11 +18,9 @@ MIN_PARALLELISM = 1
 MIN_ITERATIONS = 1
 MIN_HASH_LENGTH = 4
 
-# PasswordHasher object use to verify Argon2 hashes. 
 verifier = PasswordHasher()
 
 
-# SIMPLE HASHING
 def MD5(text: str):
     """Hashes `text` using the MD5 algorithm."""
     return md5(text.encode()).hexdigest()
@@ -39,7 +37,7 @@ def SHA_512(text: str):
     """Hashes `text` using the SHA-512 algorithm."""
     return sha512(text.encode()).hexdigest()
 
-# Mainly used for savely storing passwords. Reason why we use "password" and not "text".
+
 def Bcrypt(passwd: str, rounds: int = DEFAULT_SALT_ROUNDS):
     """
     Hashes a password using the bcrypt algorithm.
@@ -47,9 +45,6 @@ def Bcrypt(passwd: str, rounds: int = DEFAULT_SALT_ROUNDS):
     Args:
         `passwd`: The password to be hashed.
         `rounds`: The number of salt rounds to use.
-
-    Returns:
-        `str|None`: The hashed password as a string if successful, or `None` if the provided rounds parameter is invalid.
 
     Note:
         A higher number of rounds increases security, but also computation time.
@@ -76,9 +71,6 @@ def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, paralleli
         `parallelism`: The number of threads for parallel processing. 
         `hash_len`: The length of the output hash in bytes. 
         `type`: The Argon2 variant to use ('id', 'i', or 'd').
-
-    Returns:
-        `str|None`: The hashed password as a string if successful, or `None` if an invalid parameter is provided or an error occurs.
 
     Note:
         - A higher number of iterations and memory cost increases security, but also computation time.
@@ -117,7 +109,7 @@ def Argon2(passwd: str, iterations: int = 3, memory_cost: int = 65536, paralleli
     return argon2_hash
     
 
-# CHECKSUM FUNCTION
+
 def verify_hash(hash_func: str, original_text: str, hash: str) -> bool:
     """
     Verifies if the given hash matches the original text using the specified hash function.

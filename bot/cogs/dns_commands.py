@@ -19,7 +19,7 @@ class DNS(commands.Cog):
         try:
             results = dnslookup.lookup(domain)
             if not results:
-                return await ctx.send("No DNS records found.")
+                return await ctx.send("No DNS records found. Make sure the domain is valid.")
 
 
             embed = discord.Embed(
@@ -76,10 +76,10 @@ class DNS(commands.Cog):
 
         try:
             if not await valid_ip(ip):
-                return await ctx.send(f"Invalid or private IP address: {ip}. Please provide a valid public IP address.")
+                return await ctx.send(f"Invalid or private IP address. Please provide a valid public IP address.")
             results = dnslookup.reverse_lookup(ip)
             if not results or len(results[0]) == 0 or not isinstance(results, list):
-                return await ctx.send("No DNS records found.")
+                return await ctx.send("No DNS records found for this IP.")
 
 
             embed = discord.Embed(

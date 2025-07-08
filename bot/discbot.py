@@ -1,8 +1,7 @@
+import os
 import asyncio
 import logging
 import discord
-import os
-
 from discord.ext import commands
 from discord import Intents
 from dotenv import load_dotenv
@@ -29,30 +28,30 @@ bot = commands.Bot(command_prefix="!",
                    max_messages=100,
                    heartbeat_timeout=150.0)
 
-# Make sure the bot is deployed correctly
+
 @bot.event
 async def on_connect():
-    """Event when the bot connects to Discord."""
     logger.warning(f" {bot.user} has connected to Discord!\n")
     for guild in bot.guilds:
         logger.warning(f" Connected to {guild.name}")
 
 @bot.event
 async def on_ready():
-    """Event when the bot is ready to interact with Discord."""
+    """Ready to interact with Discord."""
     logger.warning(f" {bot.user} has come to repel some bugs 🐛!\n")
     logger.info(f" Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
     await bot.change_presence(activity=discord.Game(name="🐛🔥 Repelling bugs!"))
 
 
 # Help Menu
-ending_note = "To list available commands from group, type {help.clean_prefix}{help.invoked_with} <group>. For command example of usage, type {help.clean_prefix}{help.invoked_with} <command>."
+ending_note = "To list available commands from a specific group, type {help.clean_prefix}{help.invoked_with} <group>. To show a specific command's syntax, type {help.clean_prefix}{help.invoked_with} <command>."
 menu = AppMenu(timeout=120)
 bot.help_command = PrettyHelp(menu=menu, ending_note=ending_note,
                             show_index=True,
                             no_category="General",
                             thumbnail_url="https://play.pokemonshowdown.com/sprites/gen5ani/dugtrio-alola.gif",
                             index_title="Commands' Groups",
+                            case_insensitive=True,
                             color=discord.Colour.from_rgb(21, 214, 18))
 
 

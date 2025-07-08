@@ -1,7 +1,6 @@
 import qrcode
 import requests
 import io
-
 from qrcode.constants import ERROR_CORRECT_H
 from PIL import Image
 from typing import Optional

@@ -3,7 +3,6 @@ from binascii import Error
 from urllib.parse import quote, unquote
 from codecs import encode as cd
 
-# MASTER ENCODING FUNCTION
 def encode(format: str, text: str) -> str | None:
     """Encodes the given text into a given format (`binary`, `octal`, `hex`, `base64`, `URL` or `ROT13`).
 
@@ -11,9 +10,6 @@ def encode(format: str, text: str) -> str | None:
         `format`: Encoding format. Available formats: `"b"`, `"o"`, `"x"`, `"X"`, `"b64"`, `"url"`, `"rot13"`.
 
         `text`: The text to be encoded.
-
-    Returns:
-        `str|None`: The encoded text as a string, or `None` if the given format is invalid.
     
     Note: Both `"x"` and `"X"` formats encode the given text into a Hexadecimal string. 
         `"x"` uses lowercase letters, `"X"` uses uppercase letters.
@@ -47,15 +43,11 @@ def encode(format: str, text: str) -> str | None:
     return encoded_text
 
 
-# DECODING FUNCTIONS
 def fromBinary(text: str) -> str | None:
     """Decodes a binary-encoded string.
 
     Args:
         `text`: A string containing binary-encoded values, with optional spaces.
-
-    Returns:
-        `str|None`: The decoded string, or `None` if the string is not properly formatted.
 
     Notes:
         - The binary string should be in groups of 8 digits (bytes), with or without spaces.
@@ -79,9 +71,6 @@ def fromOctal(text: str) -> str | None:
     Args:
         `text`: A string containing octal-encoded values, with optional spaces.
 
-    Returns:
-        `str`: The decoded string, or `None` if the string is not properly formatted.
-
     Notes:
         - The octal string should be in groups of 3 digits, each representing a byte (with or without spaces).
         - The function assumes that the encoded characters represent valid UTF-8 characters.
@@ -103,9 +92,6 @@ def fromDecimal(text: str) -> str | None:
 
     Args:
         `text`: A string containing ASCII-encoded values, with mandatory whitespace separation.
-
-    Returns:
-        `str|None`: The decoded string, or `None` if the string is not properly formatted.
     
     Notes:
         - Each ASCII integer must be separated by whitespaces. E.g: 72 101 108 108 111
@@ -133,9 +119,6 @@ def fromHex(text: str) -> str | None:
     Args:
         `text` (str): A string containing hexadecimal-encoded values, with optional spaces.
 
-    Returns:
-        `str|None`: The decoded string, or `None` if the string is invalid or not properly formatted.
-
     Notes:
         - The hexadecimal string should have an even length, as each byte is represented by two hexadecimal characters.
     """
@@ -158,9 +141,6 @@ def fromBase64(text: str) -> str | None:
     Args:
         `text`: The base64-encoded string.
 
-    Returns:
-        `str|None`: The decoded string, or `None` if the string is invalid.
-
     Note:
         - The function assumes that the encoded characters represent valid UTF-8 characters.
     """
@@ -180,9 +160,6 @@ def URLDecode(text: str) -> str:
     Args:
         `text`: The URL-encoded string.
 
-    Returns:
-        `str`: The decoded string.
-
     Note:
         - By default, percent-encoded sequences are decoded with UTF-8, and invalid sequences are replaced by a placeholder character.
     """
@@ -193,22 +170,15 @@ def ROT13Decode(text: str) -> str:
 
     Args:
         `text`: The ROT13-encoded string.
-
-    Returns:
-        `str`: The decoded string.
     """
     return cd(text, "rot_13")
 
-# MASTER DECODING FUNCTION
 def decode(format: str, text: str) -> str | None:
     """Decodes the given text into a `UTF-8` string.
 
     Args:
         `format`: Encoded text format. Avilable formats: `"b"`, `"o"`, `"x"`, `"b64"`, `"url"`, `"rot13"`.
         `text`: The text to be decoded.
-    
-    Returns:
-        `str|None`: The decoded text as a UTF-8 string, or `None` if the given format is invalid.
     """
     decoded_string = None
 

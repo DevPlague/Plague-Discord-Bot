@@ -1,19 +1,16 @@
+import string
 from secrets import choice, randbelow
 from random import shuffle
 from math import log
 from os import getcwd, path
-import string
 
 def read_words() -> list[str]:
-    """Returns a list containing all words used for the `memorable_password_generator()` function."""
     with open(path.join(getcwd(), "bot/data/words.txt"), "r") as file:
         lines = file.readlines()
 
-    # Remove "\n"
     words = [line[:-1] for line in lines]
     return words
 
-# Password Length Variables
 MIN_PASS_LEN = 8
 MAX_PASS_LEN = 64
 MIN_PASS_WORDS = 4

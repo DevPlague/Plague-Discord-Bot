@@ -23,7 +23,7 @@ class Encoder(commands.Cog):
         # Pre-Conditions
         if format not in CODER_TYPES:
             logger.error(f" Invalid format: {format}\n")
-            return await ctx.send("Invalid format. See the help message for the list of valid formats.")
+            return await ctx.send("Invalid format. Type `!help encode` to see the list of valid formats.")
 
         if text is None:
             logger.error(f" Invalid text given")
@@ -73,7 +73,7 @@ class Encoder(commands.Cog):
         # Pre-Conditions
         if format not in CODER_TYPES:
             logger.error(f" Invalid format: {format}\n")
-            return await ctx.send("Invalid format. See the help message for the list of valid formats.")
+            return await ctx.send("Invalid format. Type `!help decode` to see the list of valid formats.")
 
         if text is None:
             logger.error(f" Invalid text given")
@@ -152,7 +152,7 @@ class Hasher(commands.Cog):
         # Pre-Conditions
         if algorithm not in HASHER_TYPES:
             logger.error(f" Invalid algorithm: {algorithm}\n")
-            return await ctx.send("Invalid algorithm. See the help message for the list of valid algorithms.")
+            return await ctx.send("Invalid algorithm. Type `!help hash` to see the list of valid algorithms.")
         
         if text is None:
             logger.error(f" Invalid text given")
@@ -269,7 +269,7 @@ class Hasher(commands.Cog):
         HASHER_TYPESv2 = HASHER_TYPES + ["bcrypt", "argon2"]
         text = " ".join(args)
         logger.info(f" Received request for verifying hash: \nHash Function: {type} - Hash: {hash} - Original Text: {text} \nUser: {ctx.author.name}\nServer: {ctx.guild.name}\nChannel: {ctx.channel.name}\n")
-        await ctx.message.add_reaction("🔑✅")
+        await ctx.message.add_reaction("🔍")
 
 
         # Pre-Conditions
@@ -283,7 +283,7 @@ class Hasher(commands.Cog):
 
         if type not in HASHER_TYPESv2:
             logger.error(f" Invalid hash function\n")
-            return await ctx.send("Invalid hash function. See the help message for the list of valid hash functions.")
+            return await ctx.send("Invalid algorithm. Type `!help vhash` to see the list of valid algorithms.")
 
 
         valid = verify_hash(type, text, hash)
@@ -291,10 +291,10 @@ class Hasher(commands.Cog):
 
         if valid:
             logger.info(f" Hash {type} matched the given text\n")
-            return await ctx.send(f"Hash {type} matched the given text 🔑✅")
+            return await ctx.send(f"Hash {type} matched the given text ✅")
         else:
             logger.info(f" Hash {type} did not match the given text\n")
-            return await ctx.send(f"Hash {type} did not match the given text 🔑❌")
+            return await ctx.send(f"Hash {type} did not match the given text ❌")
 
 
 

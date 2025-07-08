@@ -8,7 +8,7 @@ CAPS = ["c1", "c0"]
 NUMS = ["n1", "n0"]
 SYM = ["s1", "s0"]
 
-class Passwd(commands.Cog):
+class Password(commands.Cog):
     """Commands to generate random passwords and memorable passwords with custom options.""" 
     def __init__(self, bot):
         self.bot = bot
@@ -99,4 +99,4 @@ class Passwd(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Passwd(bot))
+    await bot.add_cog(Password(bot))

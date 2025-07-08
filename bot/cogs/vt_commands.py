@@ -12,7 +12,7 @@ if VT_API_KEY is None:
     logger.error(" No VirusTotal API key found. Please create a .env file with the VT_API_KEY variable.")
 
 class VT(commands.Cog):
-    """They check if a URL or an IP is malicious using VirusTotal API and return a report if exists. The API key must be set in the .env file."""
+    """They check if a URL or an IP is malicious using VirusTotal API and return a report if exists. The API key must be set in the .env file. Format for requests <https://domain> for URLs and <IP> only needed for IPs"""
     def __init__(self, bot):
         self.bot = bot
         self.apiHandler = VTApiHandler(logger, str(VT_API_KEY))
@@ -25,8 +25,7 @@ class VT(commands.Cog):
         result = await self.apiHandler.url_result(url)
         if result is False:
             logger.error(f" Invalid URL: {url}\n")
-            return await ctx.send("Invalid URL. Verify that the format is correct or that it exists at all.")
-
+            return await ctx.send("Invalid URL or WAF is blocking the request. Verify if/that is a valid URL or check it manually on VirusTotal.")
 
         if isinstance(result, dict):
             logger.info(f" Report acquired for URL: {url} \nUser: {ctx.author.name}\n")
@@ -78,7 +77,7 @@ class VT(commands.Cog):
         result = await self.apiHandler.ip_result(ip)
         if result is False:
             logger.error(f" Invalid IP address: {ip}\n")
-            return await ctx.send("Invalid IP address. Verify that is a public IP and it has a valid format.")
+            return await ctx.send("Invalid IP address. Verify if/that is a public IP and it has a valid format. Maybe the WAF is blocking the request.")
 
 
         if isinstance(result, dict):
@@ -105,7 +104,7 @@ class VT(commands.Cog):
                 ),
                 colour=color
             )
-            embed.set_footer(text="Powered by **VirusTotal**")
+            embed.set_footer(text="Powered by VirusTotal")
             embed.set_thumbnail(url=image)
             embed.set_author(name="IP Checker 🌐", url=f"https://www.virustotal.com/gui/ip-address/{ip}", icon_url="https://images.wikidexcdn.net/mwuploads/wikidex/4/49/latest/20231030185416/Repelente_EP.png?20231030185416")
 
