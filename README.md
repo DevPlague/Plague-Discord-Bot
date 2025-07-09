@@ -35,13 +35,19 @@ Before cloning the repository, you should be aware that the following components
 - Discord Token.
 - VirusTotal API key (Optional).
 
+Also, if you want to deploy Plague locally ***without using Docker***, you will need:
+- Python 3.11 or 3.12.
+- Poetry 2.1.3 or higher.
+
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/alakazam-mega.gif" width="50px" height="50px"> Setup and Installation
 
-Since Plague is intended to be deployed locally, we decided to provide two methods for installation in a concise guide suitable for any user familiarized with Python3 or Docker. Installing it via Docker is preferable due to its extreme ease; however, we have also detailed how to install it manually using Poetry.
+Since Plague is intended to be deployed locally, we decided to provide two methods for the installation in a concise and guide suitable for any user familiarized with Python3 or Docker. It is highly recommended to **install Plague via Docker**, due to its extreme ease; however, you can also install it manually using Poetry.
 
-The PDF specifies how to obtain both: [Setup Guide for Plague-bot](https://github.com/DevPlague/Plague-Discord-Bot/blob/main/docs/Setup%20Guide%20for%20Plague-bot.pdf)
+The Setup Guide for Plague can be found [here](https://github.com/DevPlague/Plague-Discord-Bot/blob/main/docs/Setup%20Guide%20for%20Plague-bot.pdf). 
 
-## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/marowak-alola.gif" width="50px" height="50px"> What is Plague capable of?
+_Note: **Links don't work on GitHub preview**, download the PDF for a better experience._
+
+## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/marowak-alola.gif" width="50px" height="50px"> Plague Features?
 - [x] Interactive help command.
 - [x] Hash checksum verification and hashing functions.
 - [x] QR Generation for both URL and WiFi data.
