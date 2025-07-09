@@ -36,7 +36,7 @@ Before cloning the repository, you should be aware that the following components
 
 Since Plague is intended to be deployed locally, we decided to provide two methods for installation in a concise guide suitable for any user familiarized with Python3 or Docker. Installing it via Docker is preferable due to its extreme ease; however, we have also detailed how to install it manually using Poetry.
 
-The PDF specifies how to obtain both: \<link al pdf\>
+The PDF specifies how to obtain both: [Setup Guide for Plague-bot](https://github.com/DevPlague/Plague-Discord-Bot/blob/main/docs/Setup%20Guide%20for%20Plague-bot.pdf)
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/marowak-alola.gif" width="50px" height="50px"> What is Plague capable of?
 - [x] Interactive help command.
