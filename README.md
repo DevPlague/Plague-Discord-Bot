@@ -23,6 +23,9 @@
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/snorlax.gif" width="50px" height="50px"> Showcase
 
+<div align="center">
+    <video src="media/Bot Showcase First Release.mp4" alt="Bot Showcase Video">
+</div>
 
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/klinklang.gif" width="50px" height="50px"> Prerequisites
