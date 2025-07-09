@@ -40,7 +40,7 @@ async def on_ready():
     """Ready to interact with Discord."""
     logger.warning(f" {bot.user} has come to repel some bugs 🐛!\n")
     logger.info(f" Environment variables\nDISCORD_TOKEN: {DISCORD_TOKEN}\nVT_API_KEY: {os.getenv('VT_API_KEY')}\n")
-    await bot.change_presence(activity=discord.Game(name="🐛🔥 Repelling bugs!"))
+    await bot.change_presence(activity=discord.Game(name="Bugs may cry🐛🔥"))
 
 
 # Help Menu

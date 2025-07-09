@@ -1,5 +1,28 @@
+<h1 align="center">Plague Discord-Bot</h1>
+
+<div align="center">
+    <br>
+    <a href="https://www.docker.com/">
+        <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="forthebadge docker"/>
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3120/">
+        <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="forthebadge python"/>
+    </a>
+    <a href="https://discord.com/">
+        <img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" alt="forthebadge discord"/>
+    </a>
+    <h3>Bugs may cry 🐛🔥</h3>
+</div>
+
+  <p align="center">
+<b>Plague</b> is a Discord bot built to assist with common tasks in penetration testing, CTF challenges, and cybersecurity workflows. While it was primarily designed for cybersecurity, Plague also includes features that are useful for regular users, such as scanning potentially malicious URLs, generating QR codes, and creating secure passwords. <b>Plague</b> currently supports 20 commands.
+  </p>
+</p>
+
+
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/snorlax.gif" width="50px" height="50px"> Showcase
+
 
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/klinklang.gif" width="50px" height="50px"> Prerequisites
@@ -35,8 +58,3 @@ The PDF specifies how to obtain both: \<link al pdf\>
 - [ ] Extract metadata.
 - [ ] CVE Searcher.
 - [ ] More moderation and guild management commands.
-
-
-
-[version-shield]: https://img.shields.io/github/package-json/v/CorwinDev/Discord-Bot?style=for-the-badge
-[version-url]: (https://github.com/DevPlague/Plague-Discord-Bot)
