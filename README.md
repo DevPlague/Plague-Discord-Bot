@@ -21,7 +21,8 @@
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/snorlax.gif" width="50px" height="50px"> Showcase
 
-https://github.com/user-attachments/assets/dd16fdbe-70ba-4fbc-8434-4684145e9bee
+
+https://github.com/user-attachments/assets/094883a9-dbcd-4d17-8b14-30340776ad7e
 
 <div align="center">
     <video src="media/Bot Showcase First Release.mp4" alt="Bot Showcase Video">
