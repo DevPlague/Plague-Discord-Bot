@@ -1,5 +1,6 @@
 import aiohttp
 from ipaddress import ip_address
+from typing import Union
 
 async def valid_ip(ip: str) -> bool:
     """Check if the IP address is valid and public."""
@@ -9,7 +10,7 @@ async def valid_ip(ip: str) -> bool:
     except ValueError:
         return False
 
-async def ip_report(ip: str, api_key: str): 
+async def ip_report(ip: str, api_key: str) -> Union[bool, dict, str]: 
     """Request a report of an IP address from VirusTotal API."""
     if not await valid_ip(ip):
         return False
@@ -25,13 +26,16 @@ async def ip_report(ip: str, api_key: str):
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
-                response.raise_for_status() 
+                if response.raise_for_status():
+                    return "There was an error while making the request. Check if you exceeded API rate limit"
                 data = await response.json()
                 
                 if "data" in data:
                     return data["data"]["attributes"]["last_analysis_stats"]
                 
-                return f"Data not found from {ip}. Test it again later or request a scan of it on the website."
+                else:
+                    error_text = await response.text()
+                    return f"Request failed with status {response.status}: {error_text}"
 
     except aiohttp.ClientError as e:
         return f"Error in the request: {e}"

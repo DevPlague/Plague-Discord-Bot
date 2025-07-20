@@ -1,6 +1,7 @@
 import aiohttp
 import base64 as b64
 from urllib.parse import urlparse
+from typing import Union
 
 async def valid_url(url: str) -> bool:
     """Check if the URL is valid and exists."""
@@ -25,7 +26,7 @@ async def valid_url(url: str) -> bool:
         return False
 
 
-async def url_report(url: str, api_key: str):
+async def url_report(url: str, api_key: str) -> Union[bool, dict, str]:
     """Request a report of a URL from VirusTotal API."""
     if not await valid_url(url):
         return False
@@ -44,13 +45,16 @@ async def url_report(url: str, api_key: str):
     try:
         async with aiohttp.ClientSession() as session:  
             async with session.get(request_url, headers=headers) as response:
-                response.raise_for_status()  
+                if response.raise_for_status():
+                    return "There was an error while making the request. Check if you exceeded API rate limit"
                 data = await response.json()
 
                 if "data" in data:
                     return data["data"]["attributes"]["last_analysis_stats"]
 
-                return f"Data not found for {url}. Try again later or request a scan on the website."
+                else:
+                    error_text = await response.text()
+                    return f"Request failed with status {response.status}: {error_text}"
 
     except aiohttp.ClientError as e:
         return f"Error in the request: {e}"

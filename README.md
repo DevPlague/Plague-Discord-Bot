@@ -52,12 +52,18 @@ The PDF specifies how to obtain both: [Setup Guide for Plague-bot](https://githu
 - [X] Memorable/Random Password Generations.
 - [x] WAF Detection with [wafw00f](https://github.com/EnableSecurity/wafw00f).
 - [x] Detect malicious URLs and IPs via [VirusTotal](https://www.virustotal.com/gui/home/upload) API (you'll need an API key to use the commands associated).
-- [X] Clean messages from channels.
+- [x] Clean messages from channels.
+- [x] File Analysis via VirusTotal API (new!)
+
+---
+
+### Disclaimer
+
+Files submitted become part of VirusTotal's database and may be accessible to premium users and researchers. Do not upload confidential, proprietary, or sensitive files.
 
 
 ## <img src="https://play.pokemonshowdown.com/sprites/gen5ani/conkeldurr.gif" width="50px" height="50px"> Requested features and coming soon!
 - [ ] Slash Commands.
-- [ ] File Analysis.
 - [ ] Extract metadata.
 - [ ] CVE Searcher.
 - [ ] More moderation and guild management commands.
